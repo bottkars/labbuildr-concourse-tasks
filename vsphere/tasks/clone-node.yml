@@ -1,0 +1,32 @@
+---
+# this simple tasksm get´s running vm´s of an azurestack subscription
+platform: linux
+
+inputs:
+ - name: labbuildr-concourse-tasks
+outputs:
+
+
+params:
+    GOVC_INSECURE: 
+    GOVC_PASSWORD: 
+    GOVC_URL: 
+    GOVC_USERNAME: 
+    GOVC_RESOURCE_POOL: 
+    GOVC_DATASTORE: 
+    GOVC_DATACENTER: 
+    GOVC_NETWORK: 
+    LABBUILDR_RESOURCE_POOL: 
+    LABBUILD_DATASTORE: 
+    LABBUILD_DATACENTER: 
+    LABBUILDR_NETWORK: 
+    LABBUILDR_ADDRESS: 
+    LABBUILDR_GATEWAY: 
+    LABBUILDR_NETMASK: 
+    LABBUILDR_FQDN: 
+    LABBUILDR_VMNAME: 
+    LABBUILDR_DNS: 
+
+run:
+  path: labbuildr-concourse-tasks/vsphere/tasks/clone-node.sh
+
