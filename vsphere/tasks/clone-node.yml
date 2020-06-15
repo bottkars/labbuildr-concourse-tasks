@@ -17,8 +17,8 @@ params:
     GOVC_DATACENTER: 
     GOVC_NETWORK: 
     LABBUILDR_RESOURCE_POOL: 
-    LABBUILD_DATASTORE: 
-    LABBUILD_DATACENTER: 
+    LABBUILDR_DATASTORE: 
+    LABBUILDR_DATACENTER: 
     LABBUILDR_NETWORK: 
     LABBUILDR_ADDRESS: 
     LABBUILDR_GATEWAY: 
@@ -28,5 +28,5 @@ params:
     LABBUILDR_DNS: 
 
 run:
-  path: labbuildr-concourse-tasks/vsphere/tasks/clone-node.sh
+  path: labbuildr-concourse-tasks/vsphere/scripts/clone-node.sh
 
