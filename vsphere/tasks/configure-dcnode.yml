@@ -4,6 +4,7 @@ platform: linux
 
 inputs:
  - name: labbuildr-concourse-tasks
+ - name: labbuildr-scripts
 outputs:
 
 
@@ -25,5 +26,5 @@ params:
     LABBUILDR_VM_NAME:    
 
 run:
-  path: labbuildr-concourse-tasks/vsphere/scripts/cconfigure-dcnode.sh
+  path: labbuildr-concourse-tasks/vsphere/scripts/configure-dcnode.sh
 
