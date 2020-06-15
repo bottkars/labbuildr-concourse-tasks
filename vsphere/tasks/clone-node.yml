@@ -23,9 +23,12 @@ params:
     LABBUILDR_ADDRESS: 
     LABBUILDR_GATEWAY: 
     LABBUILDR_NETMASK: 
-    LABBUILDR_FQDN: 
-    LABBUILDR_VMNAME: 
-    LABBUILDR_DNS: 
+    LABBUILDR_FQDN:
+    LABBUIDR_FOLDER: 
+    LABBUILDR_VM_NAME: 
+    LABBUILDR_DNS:
+    LABBUILDR_VM_MEMORY: 4096
+    LABBUIDR_VM_CPU: 2  
 
 run:
   path: labbuildr-concourse-tasks/vsphere/scripts/clone-node.sh
