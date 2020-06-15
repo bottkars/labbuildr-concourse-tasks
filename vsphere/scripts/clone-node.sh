@@ -8,5 +8,6 @@ govc vm.clone -vm 2019_template \
  -c=${LABBUILDR_VM_CPU} \
  -net=${LABBUILDR_NETWORK} \
  -pool=${LABBUILDR_RESOURCE_POOL} \
- -folder=${LABBUILDR_FOLDER} \
+ -folder=${LABBUILDR_VM_FOLDER} \
+ -ds=${LABBUILDR_DATASTORE} \
  ${LABBUILDR_VM_NAME} 
