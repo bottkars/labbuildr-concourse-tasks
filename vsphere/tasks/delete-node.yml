@@ -1,0 +1,28 @@
+---
+# this simple tasksm get´s running vm´s of an azurestack subscription
+platform: linux
+
+inputs:
+ - name: labbuildr-concourse-tasks
+outputs:
+
+
+params:
+    GOVC_INSECURE: 
+    GOVC_PASSWORD: 
+    GOVC_URL: 
+    GOVC_USERNAME: 
+    GOVC_RESOURCE_POOL: 
+    GOVC_DATASTORE: 
+    GOVC_DATACENTER: 
+    GOVC_NETWORK: 
+    LABBUILDR_RESOURCE_POOL: 
+    LABBUILDR_DATASTORE: 
+    LABBUILDR_NETWORK: 
+    LABBUILDR_VM_FOLDER: 
+    LABBUILDR_VM_NAME: 
+
+
+run:
+  path: labbuildr-concourse-tasks/vsphere/scripts/delete-node.sh
+
