@@ -1,5 +1,5 @@
 #!/bin/bash
-set -eux
+set -eu
 govc about
 
 echo "==>Beginning node removal of ${LABBUILDR_VM_NAME}"
