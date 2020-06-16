@@ -18,7 +18,7 @@ GUEST_SHELL="C:/Windows/System32/WindowsPowerShell/V1.0/powershell.exe"
 # we need to put in a wait for vm up and running ?!
 printf "==>Waiting for ${LABBUILDR_VM_NAME} to become ready"
 until govc guest.start -l="Administrator:Password123!" \
-    -vm.ipath="${LABBUILDR_VM_FOLDER}/${LABBUILDR_VM_NAME}" "${VM_SHELL}" > /dev/null 2>&1
+    -vm.ipath="${LABBUILDR_VM_FOLDER}/${LABBUILDR_VM_NAME}" "${GUEST_SHELL}" > /dev/null 2>&1
 do
   printf ". "
   sleep 5
