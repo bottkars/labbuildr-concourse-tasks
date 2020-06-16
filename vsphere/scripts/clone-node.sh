@@ -1,5 +1,5 @@
 #!/bin/bash
-set -eux
+set -eu
 govc about
 
 echo "==>Beginning deployment of ${LABBUILDR_VM_NAME} in ${LABBUILDR_RESOURCE_POOL}"

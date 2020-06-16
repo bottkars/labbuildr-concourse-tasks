@@ -1,5 +1,5 @@
 #!/bin/bash
-set -eux
+set -eu
 govc about
 # we need to put in a wait for vm up and running ?!
 
