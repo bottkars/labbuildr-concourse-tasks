@@ -2,7 +2,8 @@
 set -eu
 govc about
 DEBIAN_FRONTEND=noninteractive apt-get install -qq genisoimage < /dev/null > /dev/null
-genisoimage -o labbuildr-scripts.iso -R -J -D labbuildr-scripts 
+echo "==>Creating Script ISO"
+genisoimage -quiet -o labbuildr-scripts.iso -R -J -D labbuildr-scripts 
 echo "==>Uploading Script ISO to vCenter"
 govc datastore.upload -ds $LABBUILDR_DATASTORE ./labbuildr-scripts.iso ${LABBUILDR_VM_NAME}/labbuildr-scripts.iso 
 echo "==>Attaching Script ISO"
