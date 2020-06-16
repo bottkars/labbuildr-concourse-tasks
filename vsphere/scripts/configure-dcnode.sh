@@ -3,11 +3,10 @@ set -eux
 govc about
 
 echo "==>Beginning Configuration of ${LABBUILDR_VM_NAME} for ${LABBUILDR_FQDN}"
-apt install genisoimage -y
+DEBIAN_FRONTEND=noninteractive apt-get install -qq genisoimage < /dev/null > /dev/null
 genisoimage -o labbuildr-scripts.iso -R -J -D labbuildr-scripts 
 echo "==>Uploading Script ISO"
-govc datastore.upload -ds $LABBUILDR_DATASTORE
- ./labbuildr-scripts.iso ${LABBUILDR_VM_NAME}/labbuildr-scripts.iso 
+govc datastore.upload -ds $LABBUILDR_DATASTORE ./labbuildr-scripts.iso ${LABBUILDR_VM_NAME}/labbuildr-scripts.iso 
 echo "==>Attachin Script ISO"
 govc device.cdrom.insert -vm.ipath ${LABBUILDR_VM_FOLDER}/${LABBUILDR_VM_NAME} \
 -device cdrom-3000 ${LABBUILDR_VM_NAME}/labbuildr-scripts.iso 
