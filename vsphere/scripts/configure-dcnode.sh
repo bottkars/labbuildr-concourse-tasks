@@ -35,7 +35,7 @@ govc guest.start -l="Administrator:Password123!" \
 "${GUEST_SHELL}" "-Command \"${GUEST_SCRIPT_DIR}/${GUEST_SCRIPT} ${GUEST_PARAMETERS}\""
 
 
-printf "checking for Step 2 "
+printf "checking for Step 2 [Network Setup]"
 until govc guest.run -l Administrator:Password123! \
     -vm=dcnode $GUEST_SHELL  "-command get-item c:/scripts/2.pass" > /dev/null 2>&1
 do
@@ -52,7 +52,7 @@ govc guest.start -l="Administrator:Password123!" \
     -vm.ipath="${LABBUILDR_VM_FOLDER}/${LABBUILDR_VM_NAME}" \
     "${GUEST_SHELL}" "-Command \"${GUEST_SCRIPT_DIR}/${GUEST_SCRIPT} ${GUEST_PARAMETERS}\""
 
-printf "checking for Step 3 "
+printf "checking for Step 3 [Domain Setup]"
 until govc guest.run -l Administrator:Password123! \
     -vm=dcnode $GUEST_SHELL  "-command get-item c:/scripts/3.pass" > /dev/null 2>&1
 do
