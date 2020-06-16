@@ -1,6 +1,7 @@
 #!/bin/bash
 set -eux
 govc about
+# we need to put in a wait for vm up and running ?!
 
 echo "==>Beginning Configuration of ${LABBUILDR_VM_NAME} for ${LABBUILDR_FQDN}"
 DEBIAN_FRONTEND=noninteractive apt-get install -qq genisoimage < /dev/null > /dev/null
