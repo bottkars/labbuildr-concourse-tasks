@@ -1,6 +1,17 @@
 #!/bin/bash
 set -eu
 govc about
+DEBIAN_FRONTEND=noninteractive apt-get install -qq genisoimage < /dev/null > /dev/null
+genisoimage -o labbuildr-scripts.iso -R -J -D labbuildr-scripts 
+echo "==>Uploading Script ISO to vCenter"
+govc datastore.upload -ds $LABBUILDR_DATASTORE ./labbuildr-scripts.iso ${LABBUILDR_VM_NAME}/labbuildr-scripts.iso 
+echo "==>Attaching Script ISO"
+govc device.cdrom.insert \
+    -vm.ipath ${LABBUILDR_VM_FOLDER}/${LABBUILDR_VM_NAME} \
+    -device cdrom-3000 ${LABBUILDR_VM_NAME}/labbuildr-scripts.iso 
+
+govc device.connect \
+        -vm.ipath=${LABBUILDR_VM_FOLDER}/${LABBUILDR_VM_NAME} cdrom-3000
 GUEST_SCRIPT_DIR="D:/labbuildr-scripts/dcnode"
 GUEST_SHELL="C:/Windows/System32/WindowsPowerShell/V1.0/powershell.exe"
 # we need to put in a wait for vm up and running ?!
@@ -14,17 +25,7 @@ done
 echo
 
 echo "==>Beginning Configuration of ${LABBUILDR_VM_NAME} for ${LABBUILDR_FQDN}"
-DEBIAN_FRONTEND=noninteractive apt-get install -qq genisoimage < /dev/null > /dev/null
-genisoimage -o labbuildr-scripts.iso -R -J -D labbuildr-scripts 
-echo "==>Uploading Script ISO"
-govc datastore.upload -ds $LABBUILDR_DATASTORE ./labbuildr-scripts.iso ${LABBUILDR_VM_NAME}/labbuildr-scripts.iso 
-echo "==>Attaching Script ISO"
-govc device.cdrom.insert \
-    -vm.ipath ${LABBUILDR_VM_FOLDER}/${LABBUILDR_VM_NAME} \
-    -device cdrom-3000 ${LABBUILDR_VM_NAME}/labbuildr-scripts.iso 
 
-govc device.connect \
-        -vm.ipath=${LABBUILDR_VM_FOLDER}/${LABBUILDR_VM_NAME} cdrom-3000
 
 GUEST_SCRIPT="new-dc.ps1"
 GUEST_PARAMETERS="-dcname ${LABBUILDR_VM_NAME} -Domain ${LABBUILDR_FQDN} -AddressFamily IPv4 -IPv4Subnet ${LABBUILDR_SUBNET}"
