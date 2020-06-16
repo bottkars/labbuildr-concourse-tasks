@@ -84,4 +84,4 @@ govc guest.run -l="Administrator:Password123!" \
     "${GUEST_SHELL}" "-Command \"${GUEST_SCRIPT_DIR}/${GUEST_SCRIPT} ${GUEST_PARAMETERS}\""
 done
 
-
+echo "==>finished configuring dcnode"
