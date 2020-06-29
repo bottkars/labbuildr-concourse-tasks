@@ -22,7 +22,8 @@ params:
     LABBUILDR_VM_FOLDER: 
     LABBUILDR_VM_NAME: 
     LABBUILDR_VM_MEMORY: 
-    LABBUILDR_VM_CPU:   
+    LABBUILDR_VM_CPU:
+    LABBUILDR_VM_TEMPLATE:   
 
 run:
   path: labbuildr-concourse-tasks/vsphere/scripts/clone-node.sh
