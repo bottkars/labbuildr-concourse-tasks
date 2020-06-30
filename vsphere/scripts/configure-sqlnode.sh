@@ -6,10 +6,10 @@ export LABBUILDR_VM_IPATH=${LABBUILDR_VM_FOLDER}/${LABBUILDR_VM_NAME}
 echo "Inserting ${LABBUILDR_SQL_ISO}"
 govc device.cdrom.insert \
     -vm.ipath ${LABBUILDR_VM_IPATH} \
-    -device cdrom-3001 ${LABBUILDR_SQL_ISO} 
+    -device cdrom-3001 "${LABBUILDR_SQL_ISO}"
 echo "connecting ${LABBUILDR_SQL_ISO}"
 govc device.connect \
-        -vm.ipath=${LABBUILDR_VM_IPATH} cdrom-3001
+        -vm.ipath="${LABBUILDR_VM_IPATH}" cdrom-3001
 
 GUEST_SCRIPT_DIR="D:/labbuildr-scripts"
 NODE_SCRIPT_DIR="${GUEST_SCRIPT_DIR}/SQL"
