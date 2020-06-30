@@ -1,17 +1,22 @@
 #!/bin/bash
 set -eux
 govc about
-DEBIAN_FRONTEND=noninteractive apt-get install -qq genisoimage < /dev/null > /dev/null
 export LABBUILDR_VM_IPATH=${LABBUILDR_VM_FOLDER}/${LABBUILDR_VM_NAME}
 
-exit 1
-break
+
 govc device.cdrom.insert \
     -vm.ipath ${LABBUILDR_VM_IPATH} \
-    -device cdrom-3000 ${LABBUILDR_VM_NAME}/labbuildr-scripts.iso 
+    -device cdrom-3001 ${LABBUILDR_SQL_ISO} 
 
 govc device.connect \
-        -vm.ipath=${LABBUILDR_VM_IPATH} cdrom-3000
+        -vm.ipath=${LABBUILDR_VM_IPATH} cdrom-3001
+
+GUEST_SCRIPT_DIR="D:/labbuildr-scripts"
+NODE_SCRIPT_DIR="${GUEST_SCRIPT_DIR}/SQL"
+exit 1
+break
+
+
 GUEST_SCRIPT_DIR="D:/labbuildr-scripts/dcnode"
 GUEST_SHELL="C:/Windows/System32/WindowsPowerShell/V1.0/powershell.exe"
 vm_ready
