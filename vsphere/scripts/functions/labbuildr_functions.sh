@@ -46,3 +46,14 @@ function vm_run_powershellscript {
     -vm.ipath="${LABBUILDR_VM_IPATH}" \
     "${SHELL}" "-Command \"${SCRIPT} ${PARAMETERS}\""
 }
+
+function vm_windows_postsection {
+vm_run_powershellscript "${NODE_SCRIPT_DIR}/Set-Customlanguage.ps1" "-LanguageTag ${LABBUILDR_LANGUAGE_TAG}" 
+vm_run_powershellscript "${NODE_SCRIPT_DIR}/powerconf.ps1" "-Scriptdir ${GUEST_SCRIPT_DIR}"
+vm_run_powershellscript "${NODE_SCRIPT_DIR}/set-uac.ps1" "-Scriptdir ${GUEST_SCRIPT_DIR}"
+}
+
+function vm_reboot_step {
+    local STEP=${1}
+    vm_run_powershellscript "${NODE_SCRIPT_DIR}/set-step.ps1" "-Scriptdir ${GUEST_SCRIPT_DIR} -reboot -step ${STEP}"
+}

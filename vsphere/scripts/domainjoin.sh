@@ -35,8 +35,8 @@ MYSELF="$(dirname "${BASH_SOURCE[0]}")"
 source "${MYSELF}/functions/labbuildr_functions.sh"
 
 
-GUEST_SCRIPT_DIR="D:/labbuildr-scripts"
-NODE_SCRIPT_DIR="${GUEST_SCRIPT_DIR}/node"
+export GUEST_SCRIPT_DIR="D:/labbuildr-scripts"
+export NODE_SCRIPT_DIR="${GUEST_SCRIPT_DIR}/node"
 vm_ready
 
 echo "==>Beginning Configuration of ${LABBUILDR_VM_NAME} for ${LABBUILDR_FQDN}"

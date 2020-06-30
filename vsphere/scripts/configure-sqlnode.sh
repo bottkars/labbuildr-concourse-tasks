@@ -11,18 +11,21 @@ echo "connecting ${LABBUILDR_SQL_ISO}"
 govc device.connect \
         -vm.ipath="${LABBUILDR_VM_IPATH}" cdrom-3001
 
-GUEST_SCRIPT_DIR="D:/labbuildr-scripts"
-NODE_SCRIPT_DIR="${GUEST_SCRIPT_DIR}/SQL"
-exit 1
-break
+export GUEST_SCRIPT_DIR="D:/labbuildr-scripts"
+export NODE_SCRIPT_DIR="${GUEST_SCRIPT_DIR}/NODE"
+export SCENARIO_SCRIPT_DIR="${GUEST_SCRIPT_DIR}/SQL"
 
 
-GUEST_SCRIPT_DIR="D:/labbuildr-scripts/dcnode"
-GUEST_SHELL="C:/Windows/System32/WindowsPowerShell/V1.0/powershell.exe"
+MYSELF="$(dirname "${BASH_SOURCE[0]}")"
+source "${MYSELF}/functions/labbuildr_functions.sh"
 vm_ready
+vm_windows_postsection
+vm_wait_postsection
 
-echo "==>Beginning Configuration of ${LABBUILDR_VM_NAME} for ${LABBUILDR_FQDN}"
-GUEST_SCRIPT="new-dc.ps1"
+
+
+echo "==>Beginning SQL Setup for ${LABBUILDR_VM_NAME}"
+GUEST_SCRIPT="$SCENARIO_SCRIPT_DIR}/new-dc.ps1"
 GUEST_PARAMETERS="-dcname ${LABBUILDR_VM_NAME} -Domain ${LABBUILDR_FQDN} -AddressFamily IPv4 -IPv4Subnet ${LABBUILDR_SUBNET} -DefaultGateway ${LABBUILDR_GATEWAY}"
 govc guest.start -l="Administrator:Password123!" \
 -vm.ipath="${LABBUILDR_VM_IPATH}" \
