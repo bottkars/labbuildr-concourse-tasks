@@ -14,12 +14,9 @@ govc device.connect \
         -vm.ipath=${LABBUILDR_VM_IPATH} cdrom-3000
 GUEST_SCRIPT_DIR="D:/labbuildr-scripts/dcnode"
 GUEST_SHELL="C:/Windows/System32/WindowsPowerShell/V1.0/powershell.exe"
-# we need to put in a wait for vm up and running ?!
 vm_ready
 
 echo "==>Beginning Configuration of ${LABBUILDR_VM_NAME} for ${LABBUILDR_FQDN}"
-
-
 GUEST_SCRIPT="new-dc.ps1"
 GUEST_PARAMETERS="-dcname ${LABBUILDR_VM_NAME} -Domain ${LABBUILDR_FQDN} -AddressFamily IPv4 -IPv4Subnet ${LABBUILDR_SUBNET} -DefaultGateway ${LABBUILDR_GATEWAY}"
 govc guest.start -l="Administrator:Password123!" \

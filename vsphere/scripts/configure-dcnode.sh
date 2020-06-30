@@ -18,7 +18,6 @@ govc device.connect \
 
 GUEST_SCRIPT_DIR="D:/labbuildr-scripts"
 NODE_SCRIPT_DIR="${GUEST_SCRIPT_DIR}/dcnode"
-GUEST_SHELL="C:/Windows/System32/WindowsPowerShell/V1.0/powershell.exe"
 MYSELF="$(dirname "${BASH_SOURCE[0]}")"
 source "${MYSELF}/functions/labbuildr_functions.sh"
 

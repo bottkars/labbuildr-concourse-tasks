@@ -54,6 +54,6 @@ GUEST_PARAMETERS="-nodename ${LABBUILDR_VM_NAME} \
 -Timezone '${LABBUILDR_TIMEZONE}' \
 -scriptdir '${GUEST_SCRIPT_DIR}' \
 -AddOnfeatures '$ADDON_FEATURES'"
-vm_start_powershellscript ${GUEST_SCRIPT} ${GUEST_PARAMETERS}
+vm_start_powershellscript ${GUEST_SCRIPT} "${GUEST_PARAMETERS}"
 
 checkstep 3 "[Domain Join]"
