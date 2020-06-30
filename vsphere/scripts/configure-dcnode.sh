@@ -70,6 +70,6 @@ done
 
 vm_ready
 vm_windows_postsection
-vm_wait_postsection
+vm_reboot_step postsection
 
 echo "==>finished configuring dcnode"

@@ -2,7 +2,9 @@
 set -eux
 govc about
 export LABBUILDR_VM_IPATH=${LABBUILDR_VM_FOLDER}/${LABBUILDR_VM_NAME}
-
+export GUEST_SCRIPT_DIR="D:/labbuildr-scripts"
+export NODE_SCRIPT_DIR="${GUEST_SCRIPT_DIR}/NODE"
+export SCENARIO_SCRIPT_DIR="${GUEST_SCRIPT_DIR}/SQL"
 echo "Inserting ${LABBUILDR_SQL_ISO}"
 govc device.cdrom.insert \
     -vm.ipath ${LABBUILDR_VM_IPATH} \
@@ -11,16 +13,15 @@ echo "connecting ${LABBUILDR_SQL_ISO}"
 govc device.connect \
         -vm.ipath="${LABBUILDR_VM_IPATH}" cdrom-3001
 
-export GUEST_SCRIPT_DIR="D:/labbuildr-scripts"
-export NODE_SCRIPT_DIR="${GUEST_SCRIPT_DIR}/NODE"
-export SCENARIO_SCRIPT_DIR="${GUEST_SCRIPT_DIR}/SQL"
+
 
 
 MYSELF="$(dirname "${BASH_SOURCE[0]}")"
 source "${MYSELF}/functions/labbuildr_functions.sh"
 vm_ready
 vm_windows_postsection
-vm_wait_postsection
+vm_reboot_step UAC
+checkstep UAC "[Postsection UAC Rebbot]"
 
 break
 exit 1
