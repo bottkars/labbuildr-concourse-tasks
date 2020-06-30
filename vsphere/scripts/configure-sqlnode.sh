@@ -22,7 +22,8 @@ vm_ready
 vm_windows_postsection
 vm_wait_postsection
 
-
+break
+exit 1
 
 echo "==>Beginning SQL Setup for ${LABBUILDR_VM_NAME}"
 GUEST_SCRIPT="$SCENARIO_SCRIPT_DIR}/new-dc.ps1"

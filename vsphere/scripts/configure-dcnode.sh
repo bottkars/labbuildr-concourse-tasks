@@ -68,4 +68,8 @@ do
 vm_run_powershellscript ${GUEST_SCRIPT} "${GUEST_PARAMETERS}"
 done
 
+vm_ready
+vm_windows_postsection
+vm_wait_postsection
+
 echo "==>finished configuring dcnode"
