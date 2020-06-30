@@ -5,7 +5,7 @@ function checkstep {
     local SHELL="C:/Windows/System32/WindowsPowerShell/V1.0/powershell.exe"
 
     printf "${message}"
-    until govc guest.run -l Administrator:Password123! \
+    until govc guest.run -l ${LABBUILDR_LOGINUSER} \
         -vm.ipath="${LABBUILDR_VM_IPATH}" "${SHELL}"  "-command get-item c:/scripts/${step}.pass" > /dev/null 2>&1
     do
         printf ". "
@@ -17,7 +17,7 @@ function checkstep {
 function vm_ready {
     local SHELL=C:/Windows/System32/WindowsPowerShell/V1.0/powershell.exe
     printf "==>Waiting for ${LABBUILDR_VM_IPATH} to become ready"
-    until govc guest.start -l="Administrator:Password123!" \
+    until govc guest.start -l="${LABBUILDR_LOGINUSER}" \
         -vm.ipath="${LABBUILDR_VM_IPATH}" "${SHELL}" > /dev/null 2>&1
     do
         printf ". "
@@ -31,7 +31,7 @@ function vm_start_powershellscript {
     local PARAMETERS=${2}
     local SHELL="C:/Windows/System32/WindowsPowerShell/V1.0/powershell.exe"
     echo "==>Starting ${SCRIPT} ${PARAMETERS}"
-    govc guest.start -i=true -l="Administrator:Password123!" \
+    govc guest.start -i=true -l="${LABBUILDR_LOGINUSER}" \
     -vm.ipath="${LABBUILDR_VM_IPATH}" \
 "${SHELL}" "-Command \"${SCRIPT} ${PARAMETERS}\""
 }
@@ -42,7 +42,7 @@ function vm_run_powershellscript {
     local PARAMETERS=${2}
     local SHELL="C:/Windows/System32/WindowsPowerShell/V1.0/powershell.exe"
     echo "==>Running ${SCRIPT} ${PARAMETERS}"
-    govc guest.start -i=true -l="Administrator:Password123!" \
+    govc guest.start -i=true -l="${LABBUILDR_LOGINUSER}" \
     -vm.ipath="${LABBUILDR_VM_IPATH}" \
     "${SHELL}" "-Command \"${SCRIPT} ${PARAMETERS}\""
 }

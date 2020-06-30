@@ -26,7 +26,8 @@ params:
     LABBUILDR_VM_FOLDER: 
     LABBUILDR_VM_NAME:  
     LABBUILDR_VM_IP:
-    LABBUILDR_TIMEZONE:  
+    LABBUILDR_TIMEZONE:
+    LABBUILDR_LOGINUSER:  
 
 run:
   path: labbuildr-concourse-tasks/vsphere/scripts/domainjoin.sh
