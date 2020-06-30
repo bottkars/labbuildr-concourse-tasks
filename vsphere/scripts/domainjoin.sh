@@ -16,6 +16,8 @@
 # -TimeZone '$($labdefaults.timezone)'
 set -eux
 govc about
+export LABBUILDR_VM_IPATH=${LABBUILDR_VM_FOLDER}/${LABBUILDR_VM_NAME}
+
 DEBIAN_FRONTEND=noninteractive apt-get install -qq genisoimage < /dev/null > /dev/null
 echo "==>Creating Script ISO"
 genisoimage -quiet -o labbuildr-scripts.iso -R -J -D labbuildr-scripts 
@@ -23,11 +25,11 @@ echo "==>Uploading Script ISO to vCenter"
 govc datastore.upload -ds $LABBUILDR_DATASTORE ./labbuildr-scripts.iso ${LABBUILDR_VM_NAME}/labbuildr-scripts.iso 
 echo "==>Attaching Script ISO"
 govc device.cdrom.insert \
-    -vm.ipath ${LABBUILDR_VM_FOLDER}/${LABBUILDR_VM_NAME} \
+    -vm.ipath ${LABBUILDR_VM_IPATH} \
     -device cdrom-3000 ${LABBUILDR_VM_NAME}/labbuildr-scripts.iso 
 
 govc device.connect \
-        -vm.ipath=${LABBUILDR_VM_FOLDER}/${LABBUILDR_VM_NAME} cdrom-3000
+        -vm.ipath=${LABBUILDR_VM_IPATH} cdrom-3000
 
 MYSELF="$(dirname "${BASH_SOURCE[0]}")"
 source "${MYSELF}/functions/labbuildr_functions.sh"
@@ -35,8 +37,7 @@ source "${MYSELF}/functions/labbuildr_functions.sh"
 
 GUEST_SCRIPT_DIR="D:/labbuildr-scripts/node"
 GUEST_SHELL="C:/Windows/System32/WindowsPowerShell/V1.0/powershell.exe"
-
-vm_ready "${LABBUILDR_VM_FOLDER}/${LABBUILDR_VM_NAME}" "${GUEST_SHELL}"
+vm_ready
 
 echo "==>Beginning Configuration of ${LABBUILDR_VM_NAME} for ${LABBUILDR_FQDN}"
 LABBUILDR_DOMAIN=$(echo $LABBUILDR_FQDN | cut -d'.' -f1-1)
@@ -54,7 +55,7 @@ GUEST_PARAMETERS="-nodename ${LABBUILDR_VM_NAME} \
 -scriptdir '${GUEST_SCRIPT_DIR}' \
 -AddOnfeatures '$ADDON_FEATURES'"
 govc guest.start -i=true -l="Administrator:Password123!" \
--vm.ipath="${LABBUILDR_VM_FOLDER}/${LABBUILDR_VM_NAME}" \
+-vm.ipath="${LABBUILDR_VM_IPATH}" \
 "${GUEST_SHELL}" "-Command \"${GUEST_SCRIPT_DIR}/${GUEST_SCRIPT} ${GUEST_PARAMETERS}\""
 
 checkstep 3 "[Domain Join]"

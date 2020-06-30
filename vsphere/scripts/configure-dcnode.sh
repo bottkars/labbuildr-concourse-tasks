@@ -1,6 +1,8 @@
 #!/bin/bash
 set -eu
 govc about
+export LABBUILDR_VM_IPATH=${LABBUILDR_VM_FOLDER}/${LABBUILDR_VM_NAME}
+
 DEBIAN_FRONTEND=noninteractive apt-get install -qq genisoimage < /dev/null > /dev/null
 echo "==>Creating Script ISO"
 genisoimage -quiet -o labbuildr-scripts.iso -R -J -D labbuildr-scripts 
@@ -8,18 +10,18 @@ echo "==>Uploading Script ISO to vCenter"
 govc datastore.upload -ds $LABBUILDR_DATASTORE ./labbuildr-scripts.iso ${LABBUILDR_VM_NAME}/labbuildr-scripts.iso 
 echo "==>Attaching Script ISO"
 govc device.cdrom.insert \
-    -vm.ipath ${LABBUILDR_VM_FOLDER}/${LABBUILDR_VM_NAME} \
+    -vm.ipath ${LABBUILDR_VM_IPATH} \
     -device cdrom-3000 ${LABBUILDR_VM_NAME}/labbuildr-scripts.iso 
 
 govc device.connect \
-        -vm.ipath=${LABBUILDR_VM_FOLDER}/${LABBUILDR_VM_NAME} cdrom-3000
+        -vm.ipath=${LABBUILDR_VM_IPATH} cdrom-3000
 GUEST_SCRIPT_DIR="D:/labbuildr-scripts/dcnode"
 GUEST_SHELL="C:/Windows/System32/WindowsPowerShell/V1.0/powershell.exe"
 MYSELF="$(dirname "${BASH_SOURCE[0]}")"
 source "${MYSELF}/functions/labbuildr_functions.sh"
 
 # we need to put in a wait for vm up and running ?!
-vm_ready "${LABBUILDR_VM_FOLDER}/${LABBUILDR_VM_NAME}" "${GUEST_SHELL}"
+vm_ready
 
 echo "==>Beginning Configuration of ${LABBUILDR_VM_NAME} for ${LABBUILDR_FQDN}"
 
@@ -27,7 +29,7 @@ echo "==>Beginning Configuration of ${LABBUILDR_VM_NAME} for ${LABBUILDR_FQDN}"
 GUEST_SCRIPT="new-dc.ps1"
 GUEST_PARAMETERS="-dcname ${LABBUILDR_VM_NAME} -Domain ${LABBUILDR_FQDN} -AddressFamily IPv4 -IPv4Subnet ${LABBUILDR_SUBNET} -DefaultGateway ${LABBUILDR_GATEWAY}"
 govc guest.start -l="Administrator:Password123!" \
--vm.ipath="${LABBUILDR_VM_FOLDER}/${LABBUILDR_VM_NAME}" \
+-vm.ipath="${LABBUILDR_VM_IPATH}" \
 "${GUEST_SHELL}" "-Command \"${GUEST_SCRIPT_DIR}/${GUEST_SCRIPT} ${GUEST_PARAMETERS}\""
 
 
@@ -39,7 +41,7 @@ LABBUILDR_DOMAIN_SUFFIX=$(echo $LABBUILDR_FQDN | cut -d'.' -f2-)
 GUEST_SCRIPT="finish-domain.ps1"
 GUEST_PARAMETERS="-domain ${LABBUILDR_DOMAIN} -domainsuffix ${LABBUILDR_DOMAIN_SUFFIX}"
 govc guest.start -i=true -l="Administrator:Password123!" \
-    -vm.ipath="${LABBUILDR_VM_FOLDER}/${LABBUILDR_VM_NAME}" \
+    -vm.ipath="${LABBUILDR_VM_IPATH}" \
     "${GUEST_SHELL}" "-Command \"${GUEST_SCRIPT_DIR}/${GUEST_SCRIPT} ${GUEST_PARAMETERS}\""
 
 checkstep 3 "[Domain Setup]"
@@ -48,7 +50,7 @@ checkstep 3 "[Domain Setup]"
 GUEST_SCRIPT="dns.ps1"
 GUEST_PARAMETERS="-IPv4subnet ${LABBUILDR_SUBNET} -IPv4Prefixlength 24 -AddressFamily IPv4"
 govc guest.run -l="Administrator:Password123!" \
-    -vm.ipath="${LABBUILDR_VM_FOLDER}/${LABBUILDR_VM_NAME}" \
+    -vm.ipath="${LABBUILDR_VM_IPATH}" \
     "${GUEST_SHELL}" "-Command \"${GUEST_SCRIPT_DIR}/${GUEST_SCRIPT} ${GUEST_PARAMETERS}\""
 
 echo "==>Running DCNode Customization for vSphere"
@@ -57,7 +59,7 @@ for GUEST_SCRIPT in "${GUEST_SCRIPTS[@]}"
 do
 echo "==>Running ${GUEST_SCRIPT_DIR}/${GUEST_SCRIPT}"
 govc guest.run -l="Administrator:Password123!" \
-    -vm.ipath="${LABBUILDR_VM_FOLDER}/${LABBUILDR_VM_NAME}" \
+    -vm.ipath="${LABBUILDR_VM_IPATH}" \
     "${GUEST_SHELL}" "-Command \"${GUEST_SCRIPT_DIR}/${GUEST_SCRIPT}\""
 done
 
@@ -67,7 +69,7 @@ GUEST_SCRIPT_DIR="D:/labbuildr-scripts/node"
 GUEST_SCRIPT="disable-hardening.ps1"
 GUEST_PARAMETERS="-UpdateType never"
 govc guest.run -l="Administrator:Password123!" \
-    -vm.ipath="${LABBUILDR_VM_FOLDER}/${LABBUILDR_VM_NAME}" \
+    -vm.ipath="${LABBUILDR_VM_IPATH}" \
     "${GUEST_SHELL}" "-Command \"${GUEST_SCRIPT_DIR}/${GUEST_SCRIPT} ${GUEST_PARAMETERS}\""
 # might be delivered via "Scripts to Run"
 GUEST_SCRIPTS=("enable-ansiblewinrm.ps1" "set-winrm.ps1")
@@ -76,7 +78,7 @@ for GUEST_SCRIPT in "${GUEST_SCRIPTS[@]}"
 do
 echo "==>Running ${GUEST_SCRIPT_DIR}/${GUEST_SCRIPT}"
 govc guest.run -l="Administrator:Password123!" \
-    -vm.ipath="${LABBUILDR_VM_FOLDER}/${LABBUILDR_VM_NAME}" \
+    -vm.ipath="${LABBUILDR_VM_IPATH}" \
     "${GUEST_SHELL}" "-Command \"${GUEST_SCRIPT_DIR}/${GUEST_SCRIPT} ${GUEST_PARAMETERS}\""
 done
 
