@@ -26,3 +26,23 @@ function vm_ready {
     echo Done
 }
 
+function vm_start_powershellscript {
+    local SCRIPT=${1}
+    local PARAMETERS=${2}
+    local SHELL="C:/Windows/System32/WindowsPowerShell/V1.0/powershell.exe"
+    echo "==>Starting ${SCRIPT} ${PARAMETERS}"
+    govc guest.start -i=true -l="Administrator:Password123!" \
+    -vm.ipath="${LABBUILDR_VM_IPATH}" \
+"${SHELL}" "-Command \"${SCRIPT} ${PARAMETERS}\""
+}
+
+
+function vm_run_powershellscript {
+    local SCRIPT=${1}
+    local PARAMETERS=${2}
+    local SHELL="C:/Windows/System32/WindowsPowerShell/V1.0/powershell.exe"
+    echo "==>Running ${SCRIPT} ${PARAMETERS}"
+    govc guest.start -i=true -l="Administrator:Password123!" \
+    -vm.ipath="${LABBUILDR_VM_IPATH}" \
+    "${SHELL}" "-Command \"${SCRIPT} ${PARAMETERS}\""
+}

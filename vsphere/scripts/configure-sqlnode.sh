@@ -15,14 +15,7 @@ govc device.connect \
 GUEST_SCRIPT_DIR="D:/labbuildr-scripts/dcnode"
 GUEST_SHELL="C:/Windows/System32/WindowsPowerShell/V1.0/powershell.exe"
 # we need to put in a wait for vm up and running ?!
-printf "==>Waiting for ${LABBUILDR_VM_NAME} to become ready"
-until govc guest.start -l="Administrator:Password123!" \
-    -vm.ipath="${LABBUILDR_VM_IPATH}" "${GUEST_SHELL}" > /dev/null 2>&1
-do
-  printf ". "
-  sleep 5
-done
-echo
+vm_ready
 
 echo "==>Beginning Configuration of ${LABBUILDR_VM_NAME} for ${LABBUILDR_FQDN}"
 
@@ -61,20 +54,15 @@ done
 echo
 
 ### no a little bit hacky before doing functions
-GUEST_SCRIPT="dns.ps1"
+GUEST_SCRIPT="${GUEST_SCRIPT_DIR}/dns.ps1"
 GUEST_PARAMETERS="-IPv4subnet ${LABBUILDR_SUBNET} -IPv4Prefixlength 24 -AddressFamily IPv4"
-govc guest.run -l="Administrator:Password123!" \
-    -vm.ipath="${LABBUILDR_VM_IPATH}" \
-    "${GUEST_SHELL}" "-Command \"${GUEST_SCRIPT_DIR}/${GUEST_SCRIPT} ${GUEST_PARAMETERS}\""
+vm_run_powershellscript ${GUEST_SCRIPT} ${GUEST_PARAMETERS}
 
 echo "==>Running DCNode Customization for vSphere"
 GUEST_SCRIPTS=("add-serviceuser.ps1" "pwpolicy.ps1")
 for GUEST_SCRIPT in "${GUEST_SCRIPTS[@]}"
 do
-echo "==>Running ${GUEST_SCRIPT_DIR}/${GUEST_SCRIPT}"
-govc guest.run -l="Administrator:Password123!" \
-    -vm.ipath="${LABBUILDR_VM_IPATH}" \
-    "${GUEST_SHELL}" "-Command \"${GUEST_SCRIPT_DIR}/${GUEST_SCRIPT}\""
+    vm_run_powershellscript "${GUEST_SCRIPT_DIR}/${GUEST_SCRIPT}"
 done
 
 
