@@ -15,15 +15,11 @@ govc device.connect \
         -vm.ipath=${LABBUILDR_VM_FOLDER}/${LABBUILDR_VM_NAME} cdrom-3000
 GUEST_SCRIPT_DIR="D:/labbuildr-scripts/dcnode"
 GUEST_SHELL="C:/Windows/System32/WindowsPowerShell/V1.0/powershell.exe"
+MYSELF="$(dirname "${BASH_SOURCE[0]}")"
+source "${MYSELF}/functions/labbuildr_functions.sh"
+
 # we need to put in a wait for vm up and running ?!
-printf "==>Waiting for ${LABBUILDR_VM_NAME} to become ready"
-until govc guest.start -l="Administrator:Password123!" \
-    -vm.ipath="${LABBUILDR_VM_FOLDER}/${LABBUILDR_VM_NAME}" "${GUEST_SHELL}" > /dev/null 2>&1
-do
-  printf ". "
-  sleep 5
-done
-echo
+vm_ready "${LABBUILDR_VM_FOLDER}/${LABBUILDR_VM_NAME}" "${GUEST_SHELL}"
 
 echo "==>Beginning Configuration of ${LABBUILDR_VM_NAME} for ${LABBUILDR_FQDN}"
 
@@ -35,31 +31,18 @@ govc guest.start -l="Administrator:Password123!" \
 "${GUEST_SHELL}" "-Command \"${GUEST_SCRIPT_DIR}/${GUEST_SCRIPT} ${GUEST_PARAMETERS}\""
 
 
-printf "checking for Step 2 [Network Setup]"
-until govc guest.run -l Administrator:Password123! \
-    -vm=dcnode $GUEST_SHELL  "-command get-item c:/scripts/2.pass" > /dev/null 2>&1
-do
-  printf ". "
-  sleep 5
-done
-echo
+checkstep 2 "[Network Setup]"
+
 LABBUILDR_DOMAIN=$(echo $LABBUILDR_FQDN | cut -d'.' -f1-1)
 echo "==>Proceeding with Domain Initialization of ${LABBUILDR_DOMAIN}"
 LABBUILDR_DOMAIN_SUFFIX=$(echo $LABBUILDR_FQDN | cut -d'.' -f2-)
 GUEST_SCRIPT="finish-domain.ps1"
 GUEST_PARAMETERS="-domain ${LABBUILDR_DOMAIN} -domainsuffix ${LABBUILDR_DOMAIN_SUFFIX}"
-govc guest.start -l="Administrator:Password123!" \
+govc guest.start -i=true -l="Administrator:Password123!" \
     -vm.ipath="${LABBUILDR_VM_FOLDER}/${LABBUILDR_VM_NAME}" \
     "${GUEST_SHELL}" "-Command \"${GUEST_SCRIPT_DIR}/${GUEST_SCRIPT} ${GUEST_PARAMETERS}\""
 
-printf "checking for Step 3 [Domain Setup]"
-until govc guest.run -l Administrator:Password123! \
-    -vm=dcnode $GUEST_SHELL  "-command get-item c:/scripts/3.pass" > /dev/null 2>&1
-do
-  printf ". "
-  sleep 5
-done
-echo
+checkstep 3 "[Domain Setup]"
 
 ### no a little bit hacky before doing functions
 GUEST_SCRIPT="dns.ps1"
@@ -77,8 +60,6 @@ govc guest.run -l="Administrator:Password123!" \
     -vm.ipath="${LABBUILDR_VM_FOLDER}/${LABBUILDR_VM_NAME}" \
     "${GUEST_SHELL}" "-Command \"${GUEST_SCRIPT_DIR}/${GUEST_SCRIPT}\""
 done
-
-
 
 echo "==>Running Node Customization for vSphere"
 NODE_SCRIPT_DIR="D:/labbuildr-scripts"

@@ -39,17 +39,22 @@ GUEST_SHELL="C:/Windows/System32/WindowsPowerShell/V1.0/powershell.exe"
 vm_ready "${LABBUILDR_VM_FOLDER}/${LABBUILDR_VM_NAME}" "${GUEST_SHELL}"
 
 echo "==>Beginning Configuration of ${LABBUILDR_VM_NAME} for ${LABBUILDR_FQDN}"
-
+LABBUILDR_DOMAIN=$(echo $LABBUILDR_FQDN | cut -d'.' -f1-1)
+LABBUILDR_DOMAIN_SUFFIX=$(echo $LABBUILDR_FQDN | cut -d'.' -f2-)
 
 GUEST_SCRIPT="configure-node.ps1"
 GUEST_PARAMETERS="-nodename ${LABBUILDR_VM_NAME} \
--Domain ${LABBUILDR_FQDN} \
+-nodeip ${LABBUILDR_VM_IP} \
+-Domain ${LABBUILDR_DOMAIN} \
+-domainsuffix ${LABBUILDR_DOMAIN_SUFFIX} \
 -AddressFamily IPv4 \
 -IPv4Subnet ${LABBUILDR_SUBNET} \
 -DefaultGateway ${LABBUILDR_GATEWAY} \
--Timezone ${LABBUILDR_TIMEZONE}"
-govc guest.start -l="Administrator:Password123!" \
+-Timezone '${LABBUILDR_TIMEZONE}' \
+-scriptdir '${GUEST_SCRIPT_DIR}' \
+-AddOnfeatures '$ADDON_FEATURES'"
+govc guest.start -i=true -l="Administrator:Password123!" \
 -vm.ipath="${LABBUILDR_VM_FOLDER}/${LABBUILDR_VM_NAME}" \
 "${GUEST_SHELL}" "-Command \"${GUEST_SCRIPT_DIR}/${GUEST_SCRIPT} ${GUEST_PARAMETERS}\""
 
-checkstep 3 "checking for Step 3 [Domain Join]"
+checkstep 3 "[Domain Join]"
