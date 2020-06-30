@@ -36,6 +36,7 @@ MYSELF="$(dirname "${BASH_SOURCE[0]}")"
 source "${MYSELF}/functions/labbuildr_functions.sh"
 
 vm_ready
+checkuser Administrator
 
 echo "==>Beginning Configuration of ${LABBUILDR_VM_NAME} for ${LABBUILDR_FQDN}"
 LABBUILDR_DOMAIN=$(echo $LABBUILDR_FQDN | cut -d'.' -f1-1)
@@ -55,3 +56,6 @@ GUEST_PARAMETERS="-nodename ${LABBUILDR_VM_NAME} \
 vm_start_powershellscript ${GUEST_SCRIPT} "${GUEST_PARAMETERS}"
 
 checkstep 3 "[Domain Join]"
+
+
+

@@ -26,6 +26,17 @@ function vm_ready {
     echo Done
 }
 
+function checkuser {
+    local VM_USER=${1}
+    printf "==>Waiting for ${VM_USER} "
+    until govc guest.ps -vm.ipath $LABBUILDR_VM_IPATH -l $LABBUILDR_LOGINUSER | grep $VM_USER  > /dev/null 2>&1
+        do
+        printf ". "
+        sleep 5
+    done
+    echo Done
+}
+
 function vm_start_powershellscript {
     local SCRIPT=${1}
     local PARAMETERS=${2}
