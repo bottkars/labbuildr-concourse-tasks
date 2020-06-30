@@ -14,8 +14,7 @@
 # $AddGateway
 # -AddOnfeatures '$AddonFeatures' 
 # -TimeZone '$($labdefaults.timezone)'
-
-set -eu
+set -eux
 govc about
 DEBIAN_FRONTEND=noninteractive apt-get install -qq genisoimage < /dev/null > /dev/null
 echo "==>Creating Script ISO"
@@ -29,17 +28,15 @@ govc device.cdrom.insert \
 
 govc device.connect \
         -vm.ipath=${LABBUILDR_VM_FOLDER}/${LABBUILDR_VM_NAME} cdrom-3000
+
+MYSELF="$(dirname "${BASH_SOURCE[0]}")"
+source "${MYSELF}/functions/labbuildr_functions.sh"
+
+
 GUEST_SCRIPT_DIR="D:/labbuildr-scripts/node"
 GUEST_SHELL="C:/Windows/System32/WindowsPowerShell/V1.0/powershell.exe"
-# we need to put in a wait for vm up and running ?!
-printf "==>Waiting for ${LABBUILDR_VM_NAME} to become ready"
-until govc guest.start -l="Administrator:Password123!" \
-    -vm.ipath="${LABBUILDR_VM_FOLDER}/${LABBUILDR_VM_NAME}" "${GUEST_SHELL}" > /dev/null 2>&1
-do
-  printf ". "
-  sleep 5
-done
-echo
+
+vm_ready "${LABBUILDR_VM_FOLDER}/${LABBUILDR_VM_NAME}" "${GUEST_SHELL}"
 
 echo "==>Beginning Configuration of ${LABBUILDR_VM_NAME} for ${LABBUILDR_FQDN}"
 
@@ -54,3 +51,5 @@ GUEST_PARAMETERS="-nodename ${LABBUILDR_VM_NAME} \
 govc guest.start -l="Administrator:Password123!" \
 -vm.ipath="${LABBUILDR_VM_FOLDER}/${LABBUILDR_VM_NAME}" \
 "${GUEST_SHELL}" "-Command \"${GUEST_SCRIPT_DIR}/${GUEST_SCRIPT} ${GUEST_PARAMETERS}\""
+
+checkstep 3 "checking for Step 3 [Domain Join]"

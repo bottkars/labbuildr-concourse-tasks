@@ -5,7 +5,7 @@ platform: linux
 inputs:
  - name: labbuildr-concourse-tasks
 outputs:
-
+ - name: delte-state
 
 params:
     GOVC_INSECURE: 
