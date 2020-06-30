@@ -29,7 +29,7 @@ params:
     LABBUILDR_TIMEZONE:
     LABBUILDR_LOGINUSER:
  
-
+# 
 run:
   path: labbuildr-concourse-tasks/vsphere/scripts/domainjoin.sh
 
