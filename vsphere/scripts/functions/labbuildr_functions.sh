@@ -49,9 +49,13 @@ function checkuser {
 function vm_start_powershellscript {
     local SCRIPT=${1}
     local PARAMETERS=${2}
+    if [[ -z ${3} ]]
+        then local interactive="true"
+        else local interactive="false"
+    fi
     local SHELL="C:/Windows/System32/WindowsPowerShell/V1.0/powershell.exe"
     echo "==>Starting ${SCRIPT} ${PARAMETERS}"
-    govc guest.start -i=true -l="${LABBUILDR_LOGINUSER}" \
+    govc guest.start -i=${interactive} -l="${LABBUILDR_LOGINUSER}" \
     -vm.ipath="${LABBUILDR_VM_IPATH}" \
 "${SHELL}" "-Command \"${SCRIPT} ${PARAMETERS}\""
 }
@@ -60,9 +64,13 @@ function vm_start_powershellscript {
 function vm_run_powershellscript {
     local SCRIPT=${1}
     local PARAMETERS=${2}
+    if [[ -z ${3} ]]
+        then local interactive="true"
+        else local interactive="false"
+    fi 
     local SHELL="C:/Windows/System32/WindowsPowerShell/V1.0/powershell.exe"
     echo "==>Running ${SCRIPT} ${PARAMETERS}"
-    govc guest.run -i=true -l="${LABBUILDR_LOGINUSER}" \
+    govc guest.run -i=${interactive} -l="${LABBUILDR_LOGINUSER}" \
     -vm.ipath="${LABBUILDR_VM_IPATH}" \
     "${SHELL}" "-Command \"${SCRIPT} ${PARAMETERS}\""
 }
@@ -70,6 +78,10 @@ function vm_run_powershellscript {
 function vm_run_powershellcommand {
     local COMMAND=${1}
     local PARAMETERS=${2}
+    if [[ -z ${3} ]]
+        then local interactive="true"
+        else local interactive="false"
+    fi    
     local SHELL="C:/Windows/System32/WindowsPowerShell/V1.0/powershell.exe"
     echo "==>Running ${SCRIPT} ${PARAMETERS}"
     govc guest.run -i=false -l="${LABBUILDR_LOGINUSER}" \
@@ -86,5 +98,5 @@ function vm_windows_postsection {
 
 function vm_reboot_step {
     local STEP=${1}
-    vm_run_powershellscript "${NODE_SCRIPT_DIR}/set-step.ps1" "-Scriptdir ${GUEST_SCRIPT_DIR} -reboot -step ${STEP}"
+    vm_start_powershellscript "${NODE_SCRIPT_DIR}/set-step.ps1" "-Scriptdir ${GUEST_SCRIPT_DIR} -reboot -step ${STEP}"
 }

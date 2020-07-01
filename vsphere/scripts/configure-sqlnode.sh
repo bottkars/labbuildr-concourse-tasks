@@ -13,9 +13,6 @@ echo "connecting ${LABBUILDR_SQL_ISO}"
 govc device.connect \
         -vm.ipath="${LABBUILDR_VM_IPATH}" cdrom-3001
 
-
-
-
 MYSELF="$(dirname "${BASH_SOURCE[0]}")"
 source "${MYSELF}/functions/labbuildr_functions.sh"
 vm_ready
