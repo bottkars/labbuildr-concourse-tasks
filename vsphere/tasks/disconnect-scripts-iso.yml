@@ -4,10 +4,8 @@ platform: linux
 
 inputs:
  - name: labbuildr-concourse-tasks
- - name: labbuildr-scripts
 outputs:
- - name: node-state
-
+ - name: delte-state
 
 params:
     GOVC_INSECURE: 
@@ -18,18 +16,12 @@ params:
     GOVC_DATASTORE: 
     GOVC_DATACENTER: 
     GOVC_NETWORK: 
-    LABBUILDR_SUBNET: 
-    LABBUILDR_GATEWAY: 
-    LABBUILDR_NETMASK: 
-    LABBUILDR_FQDN: 
-    LABBUILDR_DNS: 
+    LABBUILDR_DATASTORE: 
+    LABBUILDR_DEVICE: 
     LABBUILDR_VM_FOLDER: 
-    LABBUILDR_VM_NAME:  
-    LABBUILDR_VM_IP:
-    LABBUILDR_TIMEZONE:
-    LABBUILDR_LOGINUSER:
- 
-# 
+    LABBUILDR_VM_NAME: 
+
+
 run:
-  path: labbuildr-concourse-tasks/vsphere/scripts/domainjoin.sh
+  path: labbuildr-concourse-tasks/vsphere/scripts/disconnect-scripts-iso.sh
 
