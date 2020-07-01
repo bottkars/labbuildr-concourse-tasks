@@ -28,3 +28,4 @@ create_disk data 200G
 create_disk log 20G
 create_disk tmpdb 200G
 create_disk tmplog 20G
+
