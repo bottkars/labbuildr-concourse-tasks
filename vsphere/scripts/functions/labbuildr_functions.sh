@@ -62,12 +62,14 @@ function vm_start_powershellscript {
 
 
 function vm_run_powershellscript {
+    set +u
     local SCRIPT=${1}
     local PARAMETERS=${2}
     if [[ -z ${3} ]]
         then local interactive="true"
         else local interactive="false"
-    fi 
+    fi
+    set -u 
     local SHELL="C:/Windows/System32/WindowsPowerShell/V1.0/powershell.exe"
     echo "==>Running ${SCRIPT} ${PARAMETERS}"
     govc guest.run -i=${interactive} -l="${LABBUILDR_LOGINUSER}" \
