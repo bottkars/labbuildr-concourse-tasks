@@ -106,3 +106,10 @@ function vm_reboot_step {
     local STEP=${1}
     vm_start_powershellscript "${NODE_SCRIPT_DIR}/set-step.ps1" "-Scriptdir ${GUEST_SCRIPT_DIR} -reboot -step ${STEP}"
 }
+
+function create_disk {
+    local disk_name=${1}
+    local disk_size=${2}
+    govc vm.disk.create -vm.ipath "${LABBUILDR_VM_IPATH}" \
+-name "$LABBUILDR_VM_NAME/${disk_name}" -size ${disk_size}
+}
