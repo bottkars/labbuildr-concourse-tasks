@@ -48,8 +48,8 @@ function checkuser {
 
 function vm_start_powershellscript {
     local SCRIPT=${1}
-    local PARAMETERS=${2}
     set +u
+    local PARAMETERS=${2}
     if [[ ! -z "${3}" ]]
         then local interactive="true"
         else local interactive="false"
@@ -65,8 +65,8 @@ function vm_start_powershellscript {
 
 function vm_run_powershellscript {
     local SCRIPT=${1}
-    local PARAMETERS=${2}
     set +u
+    local PARAMETERS=${2}
     if [[ ! -z "${3}" ]]
         then local interactive="true"
         else local interactive="false"
@@ -81,8 +81,8 @@ function vm_run_powershellscript {
 
 function vm_run_powershellcommand {
     local SCRIPT=${1}
-    local PARAMETERS=${2}
     set +u
+    local PARAMETERS=${2}
     if [[ ! -z "${3}" ]]
         then local interactive="true"
         else local interactive="false"
