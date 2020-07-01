@@ -5,6 +5,9 @@ export LABBUILDR_VM_IPATH=${LABBUILDR_VM_FOLDER}/${LABBUILDR_VM_NAME}
 export GUEST_SCRIPT_DIR="D:/labbuildr-scripts"
 export NODE_SCRIPT_DIR="${GUEST_SCRIPT_DIR}/NODE"
 export SCENARIO_SCRIPT_DIR="${GUEST_SCRIPT_DIR}/SQL"
+export LABBUILDR_DOMAIN=$(echo $LABBUILDR_FQDN | cut -d'.' -f1-1)
+export LABBUILDR_LOGINUSER="${LABBUILDR_DOMAIN}\\${LABBUILDR_LOGINUSER}"
+
 echo "Inserting ${LABBUILDR_SQL_ISO}"
 govc device.cdrom.insert \
     -vm.ipath ${LABBUILDR_VM_IPATH} \
@@ -18,7 +21,7 @@ source "${MYSELF}/functions/labbuildr_functions.sh"
 vm_ready
 vm_windows_postsection
 vm_reboot_step UAC
-checkstep UAC "[Postsection UAC Rebbot]"
+checkstep UAC "[Postsection UAC Reboot]"
 
 break
 exit 1
