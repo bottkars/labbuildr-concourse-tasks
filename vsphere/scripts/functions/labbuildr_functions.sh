@@ -25,6 +25,15 @@ function vm_ready {
     done
     echo Done
 }
+function checktools {
+    local VM_USERNAME=${LABBUILDR_LOGINUSER/:*}
+    printf "==>Waiting for ${LABBUILDR_VM_IPATH} to become ready"
+    until  echo $(govc guest.ps -vm.ipath $LABBUILDR_VM_IPATH  -l $LABBUILDR_LOGINUSER  --json ) | jp.py "ProcessInfo[?contains(Name,'vmtoolsd.exe')].Owner" 2>/dev/null | grep ${VM_USERNAME}
+    do
+    printf ". " 
+    sleep 5
+    done
+}
 
 function checkuser {
     local VM_USER=${1}
