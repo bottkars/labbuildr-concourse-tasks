@@ -50,7 +50,7 @@ function vm_start_powershellscript {
     local SCRIPT=${1}
     local PARAMETERS=${2}
     set +u
-    if [[ -z ${3} ]]
+    if [[ ! -z "${3}" ]]
         then local interactive="true"
         else local interactive="false"
     fi
@@ -67,7 +67,7 @@ function vm_run_powershellscript {
     local SCRIPT=${1}
     local PARAMETERS=${2}
     set +u
-    if [[ -z ${3} ]]
+    if [[ ! -z "${3}" ]]
         then local interactive="true"
         else local interactive="false"
     fi
@@ -83,7 +83,7 @@ function vm_run_powershellcommand {
     local SCRIPT=${1}
     local PARAMETERS=${2}
     set +u
-    if [[ -z ${3} ]]
+    if [[ ! -z "${3}" ]]
         then local interactive="true"
         else local interactive="false"
     fi

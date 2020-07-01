@@ -29,3 +29,9 @@ create_disk log 20G
 create_disk tmpdb 200G
 create_disk tmplog 20G
 
+
+GUEST_SCRIPT="${SCENARIO_SCRIPT_DIR}/install-sql.ps1"
+GUEST_PARAMETERS="-SQLVER SQL2019_ISO"
+vm_start_powershellscript ${GUEST_SCRIPT} "${GUEST_PARAMETERS}" interactive
+
+
