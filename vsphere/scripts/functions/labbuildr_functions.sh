@@ -62,10 +62,21 @@ function vm_run_powershellscript {
     local PARAMETERS=${2}
     local SHELL="C:/Windows/System32/WindowsPowerShell/V1.0/powershell.exe"
     echo "==>Running ${SCRIPT} ${PARAMETERS}"
-    govc guest.start -i=true -l="${LABBUILDR_LOGINUSER}" \
+    govc guest.run -i=true -l="${LABBUILDR_LOGINUSER}" \
     -vm.ipath="${LABBUILDR_VM_IPATH}" \
     "${SHELL}" "-Command \"${SCRIPT} ${PARAMETERS}\""
 }
+
+function vm_run_powershellcommand {
+    local COMMAND=${1}
+    local PARAMETERS=${2}
+    local SHELL="C:/Windows/System32/WindowsPowerShell/V1.0/powershell.exe"
+    echo "==>Running ${SCRIPT} ${PARAMETERS}"
+    govc guest.run -i=false -l="${LABBUILDR_LOGINUSER}" \
+    -vm.ipath="${LABBUILDR_VM_IPATH}" \
+    "${SHELL}" "-Command ${COMMAND} \"${PARAMETERS}\""
+}
+
 
 function vm_windows_postsection {
     vm_run_powershellscript "${NODE_SCRIPT_DIR}/Set-Customlanguage.ps1" "-LanguageTag ${LABBUILDR_LANGUAGE_TAG}" 

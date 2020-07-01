@@ -1,6 +1,7 @@
 #!/bin/bash
 #set -eu
 govc about
+
 export LABBUILDR_VM_IPATH=${LABBUILDR_VM_FOLDER}/${LABBUILDR_VM_NAME}
 
 echo "==>Beginning node removal of ${LABBUILDR_VM_NAME}"

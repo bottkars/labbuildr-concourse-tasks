@@ -1,0 +1,28 @@
+---
+# this simple tasksm get´s running vm´s of an azurestack subscription
+platform: linux
+
+inputs:
+ - name: labbuildr-concourse-tasks
+ - name: labbuildr-scripts
+outputs:
+ - name: node-state
+
+
+params:
+    GOVC_INSECURE: 
+    GOVC_PASSWORD: 
+    GOVC_URL: 
+    GOVC_USERNAME: 
+    GOVC_RESOURCE_POOL: 
+    GOVC_DATASTORE: 
+    GOVC_DATACENTER: 
+    GOVC_NETWORK:
+    LABBUILDR_VM_FOLDER: 
+    LABBUILDR_VM_NAME:  
+    LABBUILDR_LOGINUSER:
+    LABBUILDR_DCNODE:
+# 
+run:
+  path: labbuildr-concourse-tasks/vsphere/scripts/unjoin.sh
+
