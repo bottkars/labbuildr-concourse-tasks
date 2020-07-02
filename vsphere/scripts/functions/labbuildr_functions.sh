@@ -103,14 +103,11 @@ function vm_powershell {
 
 function vm_windows_postsection {
     vm_powershell --SCRIPT "${NODE_SCRIPT_DIR}/Set-Customlanguage.ps1" \
-        --PARAMETERS "-LanguageTag ${LABBUILDR_LANGUAGE_TAG}" \
-        --INTERACTIVE
+        --PARAMETERS "-LanguageTag ${LABBUILDR_LANGUAGE_TAG}" 
     vm_powershell --SCRIPT "${NODE_SCRIPT_DIR}/powerconf.ps1" \
-        --PARAMETERS "-Scriptdir ${GUEST_SCRIPT_DIR}" \
-        --INTERACTIVE
+        --PARAMETERS "-Scriptdir ${GUEST_SCRIPT_DIR}" 
     vm_powershell --SCRIPT "${NODE_SCRIPT_DIR}/set-uac.ps1" \
-        --PARAMETERS"-Scriptdir ${GUEST_SCRIPT_DIR}" \
-        --INTERACTIVE
+        --PARAMETERS"-Scriptdir ${GUEST_SCRIPT_DIR}" 
 }
 
 function vm_reboot_step {

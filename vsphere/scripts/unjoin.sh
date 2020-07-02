@@ -1,5 +1,5 @@
 #!/bin/bash
-set -eux
+set -eu
 govc about
 export LABBUILDR_VM_IPATH=${LABBUILDR_VM_FOLDER}/${LABBUILDR_DCNODE}
 LABBUILDR_DOMAIN=$(echo $LABBUILDR_FQDN | cut -d'.' -f1-1)

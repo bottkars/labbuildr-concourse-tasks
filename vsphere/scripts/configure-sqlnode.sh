@@ -32,7 +32,8 @@ create_disk tmplog 20G
 
 GUEST_SCRIPT="${SCENARIO_SCRIPT_DIR}/install-sql.ps1"
 GUEST_PARAMETERS="-SQLVER SQL2019_ISO"
-vm_powershell --SCRIPT "${GUEST_SCRIPT}" --PARAMETERS "${GUEST_PARAMETERS}" ----INTERACTIVE
+vm_powershell --SCRIPT "${GUEST_SCRIPT}" \
+    --PARAMETERS "${GUEST_PARAMETERS}"
 
 #After this, login is with svc_sql
 GUEST_SCRIPT="${SCENARIO_SCRIPT_DIR}/finish-sql.ps1"
