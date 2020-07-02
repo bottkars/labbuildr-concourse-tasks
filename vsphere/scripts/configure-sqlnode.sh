@@ -18,7 +18,7 @@ govc device.connect \
 
 MYSELF="$(dirname "${BASH_SOURCE[0]}")"
 source "${MYSELF}/functions/labbuildr_functions.sh"
-vm_ready
+checktools
 vm_windows_postsection
 vm_reboot_step UAC
 checkstep UAC "[Postsection UAC Reboot]"
@@ -32,6 +32,11 @@ create_disk tmplog 20G
 
 GUEST_SCRIPT="${SCENARIO_SCRIPT_DIR}/install-sql.ps1"
 GUEST_PARAMETERS="-SQLVER SQL2019_ISO"
-vm_start_powershellscript ${GUEST_SCRIPT} "${GUEST_PARAMETERS}" interactive
+vm_powershell --SCRIPT "${GUEST_SCRIPT}" --PARAMETERS "${GUEST_PARAMETERS}" ----INTERACTIVE
 
-
+#After this, login is with svc_sql
+GUEST_SCRIPT="${SCENARIO_SCRIPT_DIR}/finish-sql.ps1"
+GUEST_PARAMETERS=" -Scriptdir ${GUEST_SCRIPT_DIR}"
+vm_powershell --SCRIPT "${GUEST_SCRIPT}" \
+    --PARAMETERS "${GUEST_PARAMETERS}" \
+    --INTERACTIVE --NOWAIT

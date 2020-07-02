@@ -14,7 +14,7 @@ echo "Removing${LABBUILDR_VM_NAME} from ${LABBUILDR_DOMAIN}"
 
 GUEST_SCRIPT="Remove-ADComputer"
 GUEST_PARAMETERS="-Identity ${LABBUILDR_VM_NAME} -Confirm:\$false"
-vm_run_powershellscript ${GUEST_SCRIPT} "${GUEST_PARAMETERS}"
+vm_powershell --SCRIPT "${GUEST_SCRIPT}" --PARAMETERS "${GUEST_PARAMETERS}" --INETRACTIVE
 
 
 

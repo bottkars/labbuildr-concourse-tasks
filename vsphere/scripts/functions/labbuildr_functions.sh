@@ -26,8 +26,10 @@ function vm_ready {
     echo Done
 }
 function checktools {
-    local VM_USERNAME=${LABBUILDR_LOGINUSER/:*}
-    printf "==>Waiting for ${LABBUILDR_VM_IPATH} to become ready"
+    # stip domain and password
+    local VM_USERNAME=${LABBUILDR_LOGINUSER#*\\}
+    local VM_USERNAME=${VM_USERNAME/:*}
+    printf "==>Waiting for vmtoold for user $VM_USERNAME on${LABBUILDR_VM_IPATH} to become ready"
     until  echo $(govc guest.ps -vm.ipath $LABBUILDR_VM_IPATH  -l $LABBUILDR_LOGINUSER  --json ) | jp.py "ProcessInfo[?contains(Name,'vmtoolsd.exe')].Owner" 2>/dev/null | grep ${VM_USERNAME}
     do
     printf ". " 
@@ -46,65 +48,76 @@ function checkuser {
     echo Done
 }
 
-function vm_start_powershellscript {
-    local SCRIPT=${1}
+
+
+function vm_powershell {
     set +u
-    local PARAMETERS=${2}
-    if [[ ! -z "${3}" ]]
-        then local interactive="true"
-        else local interactive="false"
-    fi
+    local interactive=false
+    local govc_command="guest.run"   
+    POSITIONAL=()
+    while [[ $# -gt 0 ]]
+    do
+        key="$1"
+        case $key in
+            -s|--SCRIPT)
+            local SCRIPT=${2}
+            echo "Script is ${SCRIPT}"
+            shift
+            # past value if  arg value
+            ;;
+            -p|--PARAMETERS)
+            local PARAMETERS=${2}
+            echo "Parameters is ${PARAMETERS}"
+            shift # past value ia arg value
+            ;;
+            -i|--INTERACTIVE)
+            local interactive=true
+            echo "interactive is ${interactive}"
+            # shift  # past value ia arg value
+            ;;
+            -n|--NOWAIT)
+            local govc_command="guest.start"
+            echo "interactive is ${interactive}"
+            # shift  # past value ia arg value
+            ;;            
+            *) 
+            echo "unknown Parameter $1"
+            return 1   # unknown option
+            POSITIONAL+=("$1") # save it in an array for later
+            #shift # past argument
+            ;;
+        esac
+        shift
+    done
+    set -- "${POSITIONAL[@]}" # restore positional parameters
+
+    local SHELL="C:/Windows/System32/WindowsPowerShell/V1.0/powershell.exe"
+    echo "==>Running ${SCRIPT} ${PARAMETERS} -interactive=$interactive"
+    govc guest.run -l="${LABBUILDR_LOGINUSER}" \
+        -vm.ipath="${LABBUILDR_VM_IPATH}" \
+        -i=$interactive \
+        "${SHELL}" "-Command \"${SCRIPT} ${PARAMETERS}\""
     set -u 
-    local SHELL="C:/Windows/System32/WindowsPowerShell/V1.0/powershell.exe"
-    echo "==>Starting ${SCRIPT} ${PARAMETERS}"
-    govc guest.start -i=${interactive} -l="${LABBUILDR_LOGINUSER}" \
-    -vm.ipath="${LABBUILDR_VM_IPATH}" \
-"${SHELL}" "-Command \"${SCRIPT} ${PARAMETERS}\""
-}
-
-
-function vm_run_powershellscript {
-    local SCRIPT=${1}
-    set +u
-    local PARAMETERS=${2}
-    if [[ ! -z "${3}" ]]
-        then local interactive="true"
-        else local interactive="false"
-    fi
-    set -u 
-    local SHELL="C:/Windows/System32/WindowsPowerShell/V1.0/powershell.exe"
-    echo "==>Running ${SCRIPT} ${PARAMETERS}"
-    govc guest.run -i=${interactive} -l="${LABBUILDR_LOGINUSER}" \
-    -vm.ipath="${LABBUILDR_VM_IPATH}" \
-    "${SHELL}" "-Command \"${SCRIPT} ${PARAMETERS}\""
-}
-
-function vm_run_powershellcommand {
-    local SCRIPT=${1}
-    set +u
-    local PARAMETERS=${2}
-    if [[ ! -z "${3}" ]]
-        then local interactive="true"
-        else local interactive="false"
-    fi
-    set -u  
-    local SHELL="C:/Windows/System32/WindowsPowerShell/V1.0/powershell.exe"
-    echo "==>Running ${SCRIPT} ${PARAMETERS}"
-    govc guest.run -i=false -l="${LABBUILDR_LOGINUSER}" \
-    -vm.ipath="${LABBUILDR_VM_IPATH}" \
-    "${SHELL}" "-Command ${COMMAND} \"${PARAMETERS}\""
 }
 
 
 function vm_windows_postsection {
-    vm_run_powershellscript "${NODE_SCRIPT_DIR}/Set-Customlanguage.ps1" "-LanguageTag ${LABBUILDR_LANGUAGE_TAG}" 
-    vm_run_powershellscript "${NODE_SCRIPT_DIR}/powerconf.ps1" "-Scriptdir ${GUEST_SCRIPT_DIR}"
-    vm_run_powershellscript "${NODE_SCRIPT_DIR}/set-uac.ps1" "-Scriptdir ${GUEST_SCRIPT_DIR}"
+    vm_powershell --SCRIPT "${NODE_SCRIPT_DIR}/Set-Customlanguage.ps1" \
+        --PARAMETERS "-LanguageTag ${LABBUILDR_LANGUAGE_TAG}" \
+        --INTERACTIVE
+    vm_powershell --SCRIPT "${NODE_SCRIPT_DIR}/powerconf.ps1" \
+        --PARAMETERS "-Scriptdir ${GUEST_SCRIPT_DIR}" \
+        --INTERACTIVE
+    vm_powershell --SCRIPT "${NODE_SCRIPT_DIR}/set-uac.ps1" \
+        --PARAMETERS"-Scriptdir ${GUEST_SCRIPT_DIR}" \
+        --INTERACTIVE
 }
 
 function vm_reboot_step {
     local STEP=${1}
-    vm_start_powershellscript "${NODE_SCRIPT_DIR}/set-step.ps1" "-Scriptdir ${GUEST_SCRIPT_DIR} -reboot -step ${STEP}"
+    vm_powershell --SCRIPT "${NODE_SCRIPT_DIR}/set-step.ps1" \
+        --PARAMETERS "-Scriptdir ${GUEST_SCRIPT_DIR} -reboot -step ${STEP}" \
+        --INTERACTIVE --NOWAIT
 }
 
 function create_disk {
@@ -113,3 +126,4 @@ function create_disk {
     govc vm.disk.create -vm.ipath "${LABBUILDR_VM_IPATH}" \
 -name "$LABBUILDR_VM_NAME/${disk_name}" -size ${disk_size}
 }
+

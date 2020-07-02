@@ -9,7 +9,6 @@ export NODE_SCRIPT_DIR="${GUEST_SCRIPT_DIR}/node"
 MYSELF="$(dirname "${BASH_SOURCE[0]}")"
 source "${MYSELF}/functions/labbuildr_functions.sh"
 
-vm_ready
 checktools
 
 echo "==>Beginning Configuration of ${LABBUILDR_VM_NAME} for ${LABBUILDR_FQDN}"
@@ -27,7 +26,10 @@ GUEST_PARAMETERS="-nodename ${LABBUILDR_VM_NAME} \
 -Timezone '${LABBUILDR_TIMEZONE}' \
 -scriptdir '${GUEST_SCRIPT_DIR}' \
 -AddOnfeatures '$ADDON_FEATURES'"
-vm_start_powershellscript ${GUEST_SCRIPT} "${GUEST_PARAMETERS}"
+
+vm_powershell --SCRIPT "${GUEST_SCRIPT}" \
+    --PARAMETERS "${GUEST_PARAMETERS}" \
+    --INTERACTIVE --NOWAIT
 
 checkstep 3 "[Domain Join]"
 
