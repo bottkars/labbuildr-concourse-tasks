@@ -1,5 +1,6 @@
 #!/bin/bash
 set -eu
+[[ "${LABBUILDR_DEBUG}" == "TRUE" ]] && set -x
 govc about
 
 echo "==>Beginning deployment of ${LABBUILDR_VM_NAME} in ${LABBUILDR_RESOURCE_POOL}"

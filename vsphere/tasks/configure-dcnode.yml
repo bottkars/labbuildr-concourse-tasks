@@ -25,6 +25,7 @@ params:
     LABBUILDR_VM_FOLDER: 
     LABBUILDR_VM_NAME:
     LABBUILDR_LOGINUSER:    
+    LABBUILDR_DEBUG:   
 
 run:
   path: labbuildr-concourse-tasks/vsphere/scripts/configure-dcnode.sh

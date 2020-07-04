@@ -20,7 +20,7 @@ params:
     LABBUILDR_DEVICE: 
     LABBUILDR_VM_FOLDER: 
     LABBUILDR_VM_NAME: 
-
+    LABBUILDR_DEBUG:   
 
 run:
   path: labbuildr-concourse-tasks/vsphere/scripts/disconnect-scripts-iso.sh

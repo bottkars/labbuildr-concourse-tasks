@@ -1,5 +1,6 @@
 #!/bin/bash
-set -eux
+set -eu
+[[ "${LABBUILDR_DEBUG}" == "TRUE" ]] && set -x
 govc about
 export LABBUILDR_VM_IPATH=${LABBUILDR_VM_FOLDER}/${LABBUILDR_VM_NAME}
 export GUEST_SCRIPT_DIR="D:/labbuildr-scripts"

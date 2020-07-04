@@ -22,9 +22,8 @@ params:
     LABBUILDR_VM_FOLDER: 
     LABBUILDR_VM_NAME:
     LABBUILDR_DEVICE: cdrom-3000
-
+    LABBUILDR_DEBUG:   
  
-# 
 run:
   path: labbuildr-concourse-tasks/vsphere/scripts/generate-scripts-iso.sh
 

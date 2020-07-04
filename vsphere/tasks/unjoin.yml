@@ -21,7 +21,8 @@ params:
     LABBUILDR_VM_NAME:  
     LABBUILDR_LOGINUSER:
     LABBUILDR_DCNODE:
-# 
+    LABBUILDR_DEBUG:   
+
 run:
   path: labbuildr-concourse-tasks/vsphere/scripts/unjoin.sh
 
