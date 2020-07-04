@@ -29,8 +29,9 @@ function checktools {
     # stip domain and password
     local VM_USERNAME=${LABBUILDR_LOGINUSER#*\\}
     local VM_USERNAME=${VM_USERNAME/:*}
-    printf "==>Waiting for vmtoold for user $VM_USERNAME on${LABBUILDR_VM_IPATH} to become ready"
-    until  echo $(govc guest.ps -vm.ipath $LABBUILDR_VM_IPATH  -l $LABBUILDR_LOGINUSER  --json ) | jp.py "ProcessInfo[?contains(Name,'vmtoolsd.exe')].Owner" 2>/dev/null | grep ${VM_USERNAME}
+    printf "==>Waiting for vmtoolsd for user $VM_USERNAME on ${LABBUILDR_VM_IPATH} to become ready"
+    until  echo $(govc guest.ps -vm.ipath $LABBUILDR_VM_IPATH -l $LABBUILDR_LOGINUSER  --json ) \
+    | jp.py "ProcessInfo[?contains(Name,'vmtoolsd.exe')].Owner" 2>/dev/null | grep ${VM_USERNAME}
     do
     printf ". " 
     sleep 5
@@ -62,23 +63,23 @@ function vm_powershell {
         case $key in
             -s|--SCRIPT)
             local SCRIPT=${2}
-            echo "Script is ${SCRIPT}"
+            echo "Script: ${SCRIPT}"
             shift
             # past value if  arg value
             ;;
             -p|--PARAMETERS)
             local PARAMETERS=${2}
-            echo "Parameters is ${PARAMETERS}"
+            echo "Parameter: ${PARAMETERS}"
             shift # past value ia arg value
             ;;
             -i|--INTERACTIVE)
             local interactive=true
-            echo "interactive is ${interactive}"
+            echo "interactive: ${interactive}"
             # shift  # past value ia arg value
             ;;
             -n|--NOWAIT)
             local govc_command="guest.start"
-            echo "Nowait set, using guest.start"
+            echo "govc_command: ${govc_command}"
             set +e
             # shift  # past value ia arg value
             ;;            
