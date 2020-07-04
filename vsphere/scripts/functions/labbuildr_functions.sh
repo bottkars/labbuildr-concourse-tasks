@@ -78,7 +78,7 @@ function vm_powershell {
             ;;
             -n|--NOWAIT)
             local govc_command="guest.start"
-            echo "interactive is ${interactive}"
+            echo "Nowait set, using guest.start"
             set +e
             # shift  # past value ia arg value
             ;;            
