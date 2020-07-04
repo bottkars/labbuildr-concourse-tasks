@@ -78,6 +78,7 @@ function vm_powershell {
             -n|--NOWAIT)
             local govc_command="guest.start"
             echo "interactive is ${interactive}"
+            set +e
             # shift  # past value ia arg value
             ;;            
             *) 
@@ -97,7 +98,7 @@ function vm_powershell {
         -vm.ipath="${LABBUILDR_VM_IPATH}" \
         -i=$interactive \
         "${SHELL}" "-Command \"${SCRIPT} ${PARAMETERS}\""
-    set -u 
+    set -eu 
 }
 
 

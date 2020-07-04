@@ -32,6 +32,7 @@ vm_powershell --SCRIPT "${GUEST_SCRIPT}" \
     --PARAMETERS "${GUEST_PARAMETERS}" \
     --INTERACTIVE --NOWAIT
 
+echo "Proceeding with Checkstep"
 checkstep 3 "[Domain Join]"
 
 
