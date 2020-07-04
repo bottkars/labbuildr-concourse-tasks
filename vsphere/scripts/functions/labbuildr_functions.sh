@@ -109,7 +109,7 @@ function vm_windows_postsection {
     vm_powershell --SCRIPT "${NODE_SCRIPT_DIR}/powerconf.ps1" \
         --PARAMETERS "-Scriptdir ${GUEST_SCRIPT_DIR}" 
     vm_powershell --SCRIPT "${NODE_SCRIPT_DIR}/set-uac.ps1" \
-        --PARAMETERS"-Scriptdir ${GUEST_SCRIPT_DIR}" 
+        --PARAMETERS "-Scriptdir ${GUEST_SCRIPT_DIR}" 
 }
 
 function vm_reboot_step {
