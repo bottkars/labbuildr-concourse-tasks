@@ -51,7 +51,7 @@ function checkuser {
 
 
 function vm_powershell {
-    oldstate="$(shopt -po xtrace noglob errexit)"
+    # local oldstate="$(shopt -po xtrace noglob errexit)"
     set +u
     local interactive=false
     local govc_command="guest.run"   
@@ -98,7 +98,7 @@ function vm_powershell {
         -vm.ipath="${LABBUILDR_VM_IPATH}" \
         -i=$interactive \
         "${SHELL}" "-Command \"${SCRIPT} ${PARAMETERS}\""
-    set +vx; eval "$oldstate" 
+    set -eu 
 }
 
 
