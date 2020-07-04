@@ -92,10 +92,9 @@ function vm_powershell {
         shift
     done
     set -- "${POSITIONAL[@]}" # restore positional parameters
-
     local SHELL="C:/Windows/System32/WindowsPowerShell/V1.0/powershell.exe"
     echo "==>Running ${SCRIPT} ${PARAMETERS} -interactive=$interactive"
-    govc guest.run -l="${LABBUILDR_LOGINUSER}" \
+    govc $govc_command -l="${LABBUILDR_LOGINUSER}" \
         -vm.ipath="${LABBUILDR_VM_IPATH}" \
         -i=$interactive \
         "${SHELL}" "-Command \"${SCRIPT} ${PARAMETERS}\""
