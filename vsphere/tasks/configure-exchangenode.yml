@@ -25,7 +25,8 @@ params:
     LABBUILDR_VM_FOLDER: 
     LABBUILDR_VM_NAME:    
     LABBUILDR_DEBUG:
-    LABBUILDR_EXCHANGE_ISO:   
+    LABBUILDR_EXCHANGE_ISO:
+    LABBUILDR_EXCHANGE_CU:   
 
 run:
   path: labbuildr-concourse-tasks/vsphere/scripts/configure-sqlnode.sh

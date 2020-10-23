@@ -35,7 +35,7 @@ create_disk data3 200G
 
 #
 #GUEST_SCRIPT="${SCENARIO_SCRIPT_DIR}/create-dag.ps1"
-#GUEST_PARAMETERS="-EX_Version 2019cu7 -DAGIP $DAGIP"
+#GUEST_PARAMETERS="-EX_Version 2019 -ex_cu LABBUILDR_EXCHANGE_CU -DAGIP $DAGIP"
 #vm_powershell --SCRIPT "${GUEST_SCRIPT}" \
 #    --PARAMETERS "${GUEST_PARAMETERS}"
 # $script_invoke = $NodeClone | Invoke-VMXPowershell -Guestuser $Adminuser -Guestpassword $Adminpassword -ScriptPath $IN_Guest_UNC_ScenarioScriptDir -activeWindow -interactive -Script create-dag.ps1 -Parameter "-DAGIP $DAGIP -AddressFamily $EXAddressFamiliy 

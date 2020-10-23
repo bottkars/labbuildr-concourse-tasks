@@ -5,7 +5,6 @@ set -eu
 govc about
 export LABBUILDR_VM_IPATH=${LABBUILDR_VM_FOLDER}/${LABBUILDR_VM_NAME}
 
-DEBIAN_FRONTEND=noninteractive apt-get install -qq genisoimage < /dev/null > /dev/null
 echo "==>Creating Script ISO"
 genisoimage -quiet -o labbuildr-scripts.iso -R -J -D labbuildr-scripts 
 echo "==>Uploading Script ISO to vCenter"
