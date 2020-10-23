@@ -31,7 +31,7 @@ function checktools {
     local VM_USERNAME=${VM_USERNAME/:*}
     printf "==>Waiting for vmtoolsd for user $VM_USERNAME on ${LABBUILDR_VM_IPATH} to become ready"
     until  echo $(govc guest.ps -vm.ipath $LABBUILDR_VM_IPATH -l $LABBUILDR_LOGINUSER  --json ) \
-    | jp.py "ProcessInfo[?contains(Name,'vmtoolsd.exe')].Owner" 2>/dev/null | grep ${VM_USERNAME}
+    | jq --arg user $VM_USERNAME '.[][] | select(.Name=="vmtoolsd.exe") | select(.Owner | contains($user))'
     do
     printf ". " 
     sleep 5
