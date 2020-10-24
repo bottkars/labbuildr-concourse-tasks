@@ -32,11 +32,14 @@ GUEST_PARAMETERS="-nodename ${LABBUILDR_VM_NAME} \
 echo $GUEST_PARAMETERS
 
 
-retryop '(vm_powershell --SCRIPT "${GUEST_SCRIPT}" \
+until vm_powershell --SCRIPT "${GUEST_SCRIPT}" \
     --PARAMETERS "${GUEST_PARAMETERS}" \
-    --INTERACTIVE --NOWAIT)' 20 5
-
-   
+    --INTERACTIVE --NOWAIT
+do
+ sleep 2
+ printf .
+done
+echo    
 echo "Proceeding with Checkstep"
 checkstep 3 "[Domain Join]"
 
