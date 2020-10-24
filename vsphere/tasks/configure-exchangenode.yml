@@ -29,5 +29,5 @@ params:
     LABBUILDR_EXCHANGE_CU:   
 
 run:
-  path: labbuildr-concourse-tasks/vsphere/scripts/configure-sqlnode.sh
+  path: labbuildr-concourse-tasks/vsphere/scripts/configure-exchangenode.sh
 
