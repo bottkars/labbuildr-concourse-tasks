@@ -32,15 +32,19 @@ create_disk data1 500G
 create_disk data2 500G
 create_disk data3 500G
 
+vm_ready
+checktools
 echo "Preparing disks in OS"
-
-
 GUEST_SCRIPT="${SCENARIO_SCRIPT_DIR}/prepare-disks.ps1"
 GUEST_PARAMETERS="-Scriptdir ${GUEST_SCRIPT_DIR}"
-vm_powershell --SCRIPT "${GUEST_SCRIPT}" \
+
+until vm_powershell --SCRIPT "${GUEST_SCRIPT}" \
     --PARAMETERS "${GUEST_PARAMETERS}" --INTERACTIVE 
     
-    
+do
+ sleep 2
+ printf .
+done    
 guest_mkdir 'c:\swdist'
 
 guest_copy
