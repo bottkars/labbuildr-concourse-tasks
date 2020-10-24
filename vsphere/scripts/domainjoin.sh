@@ -32,9 +32,9 @@ GUEST_PARAMETERS="-nodename ${LABBUILDR_VM_NAME} \
 echo $GUEST_PARAMETERS
 
 
-retryop "(vm_powershell --SCRIPT "${GUEST_SCRIPT}" \
+retryop '(vm_powershell --SCRIPT "${GUEST_SCRIPT}" \
     --PARAMETERS "${GUEST_PARAMETERS}" \
-    --INTERACTIVE --NOWAIT)" 20 5
+    --INTERACTIVE --NOWAIT)' 20 5
 
    
 echo "Proceeding with Checkstep"
