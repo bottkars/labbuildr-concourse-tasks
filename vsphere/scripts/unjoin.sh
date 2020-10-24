@@ -9,7 +9,7 @@ LABBUILDR_DOMAIN=$(echo $LABBUILDR_FQDN | cut -d'.' -f1-1)
 
 MYSELF="$(dirname "${BASH_SOURCE[0]}")"
 source "${MYSELF}/functions/labbuildr_functions.sh"
-
+vm_ready
 checktools
 export LABBUILDR_LOGINUSER="${LABBUILDR_DOMAIN}\\${LABBUILDR_LOGINUSER}"
 echo "Removing${LABBUILDR_VM_NAME} from ${LABBUILDR_DOMAIN}"

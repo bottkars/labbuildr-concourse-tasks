@@ -25,6 +25,7 @@ MYSELF="$(dirname "${BASH_SOURCE[0]}")"
 source "${MYSELF}/functions/labbuildr_functions.sh"
 
 # we need to put in a wait for vm up and running ?!
+vm_ready
 checktools
 
 echo "==>Beginning Configuration of ${LABBUILDR_VM_NAME} for ${LABBUILDR_FQDN}"
@@ -78,7 +79,7 @@ do
 vm_powershell --SCRIPT "${GUEST_SCRIPT}" \
     --PARAMETERS "${GUEST_PARAMETERS}"
 done
-
+vm_ready
 checktools
 vm_windows_postsection
 vm_reboot_step postsection
