@@ -1,4 +1,26 @@
 #!/bin/bash
+function retryop()
+{
+  retry=0
+  max_retries=$2
+  interval=$3
+  while [ ${retry} -lt ${max_retries} ]; do
+    echo "Operation: $1, Retry #${retry}"
+    eval $1
+    if [ $? -eq 0 ]; then
+      echo "Successful"
+      break
+    else
+      let retry=retry+1
+      echo "Sleep $interval seconds, then retry..."
+      sleep $interval
+    fi
+  done
+  if [ ${retry} -eq ${max_retries} ]; then
+    echo "Operation failed: $1"
+    exit 1
+  fi
+}
 function checkstep {
     local step=${1}
     local message="==>checking for Step ${step} ${2} "
@@ -94,10 +116,10 @@ function vm_powershell {
     set -- "${POSITIONAL[@]}" # restore positional parameters
     local SHELL="C:/Windows/System32/WindowsPowerShell/V1.0/powershell.exe"
     echo "==>Running ${SCRIPT} ${PARAMETERS} -interactive=$interactive"
-    govc $govc_command -l="${LABBUILDR_LOGINUSER}" \
+    retryop "(govc $govc_command -l="${LABBUILDR_LOGINUSER}" \
         -vm.ipath="${LABBUILDR_VM_IPATH}" \
         -i=$interactive \
-        "${SHELL}" "-Command \"${SCRIPT} ${PARAMETERS}\""
+        "${SHELL}" "-Command \"${SCRIPT} ${PARAMETERS}\"")" 3 10
     set -eu 
 }
 
