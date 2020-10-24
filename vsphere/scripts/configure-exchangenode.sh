@@ -39,7 +39,7 @@ GUEST_SCRIPT="${SCENARIO_SCRIPT_DIR}/prepare-disks.ps1.ps1"
 GUEST_PARAMETERS="-Scriptdir ${GUEST_SCRIPT_DIR}"
 vm_powershell --SCRIPT "${GUEST_SCRIPT}" \
     --PARAMETERS "${GUEST_PARAMETERS}" \
-    --INTERACTIVE 
+#    --INTERACTIVE 
     
     
     --NOWAIT
