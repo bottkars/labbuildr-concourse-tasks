@@ -123,6 +123,17 @@ function create_disk {
     local disk_name=${1}
     local disk_size=${2}
     govc vm.disk.create -vm.ipath "${LABBUILDR_VM_IPATH}" \
--name "$LABBUILDR_VM_NAME/${disk_name}" -size ${disk_size}
+    -name "$LABBUILDR_VM_NAME/${disk_name}" -size ${disk_size}
+}
+function guest_upload {
+    local source_file=${1}
+    local target_file=${2}
+    govc guest.upload vm.ipath "${LABBUILDR_VM_IPATH}" \
+    ${source_file} ${target_file}
 }
 
+function guest_mkdir {
+    local target_dir=${1}
+    govc guest.mkdir vm.ipath "${LABBUILDR_VM_IPATH}" \
+    -p ${target_dir}
+}
