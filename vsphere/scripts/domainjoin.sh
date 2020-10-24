@@ -11,6 +11,7 @@ export NODE_SCRIPT_DIR="${GUEST_SCRIPT_DIR}/node"
 MYSELF="$(dirname "${BASH_SOURCE[0]}")"
 source "${MYSELF}/functions/labbuildr_functions.sh"
 
+checkuser
 checktools
 
 echo "==>Beginning Configuration of ${LABBUILDR_VM_NAME} for ${LABBUILDR_FQDN}"
