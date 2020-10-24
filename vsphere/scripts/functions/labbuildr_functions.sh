@@ -76,7 +76,8 @@ function vm_powershell {
     # local oldstate="$(shopt -po xtrace noglob errexit)"
     set +u
     local interactive=false
-    local govc_command="guest.run"   
+    local govc_command="guest.run" 
+    local PID=""  
     POSITIONAL=()
     while [[ $# -gt 0 ]]
     do
