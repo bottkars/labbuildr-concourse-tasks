@@ -25,13 +25,14 @@ function vm_ready {
     done
     echo Done
 }
+
 function checktools {
     # stip domain and password
     local VM_USERNAME=${LABBUILDR_LOGINUSER#*\\}
     local VM_USERNAME=${VM_USERNAME/:*}
     printf "==>Waiting for vmtoolsd for user $VM_USERNAME on ${LABBUILDR_VM_IPATH} to become ready"
-    until  echo $(govc guest.ps -vm.ipath $LABBUILDR_VM_IPATH -l $LABBUILDR_LOGINUSER --json ) \
-    | jq -r -e --arg user $VM_USERNAME '.[][] | select(.Name=="vmtoolsd.exe") | select(.Owner | contains($user))'
+    until  $(govc guest.ps -vm.ipath $LABBUILDR_VM_IPATH -l $LABBUILDR_LOGINUSER --json ) \
+    | jq -r -e --arg user $VM_USERNAME '.[][] | select(.Name=="vmtoolsd.exe") | select(.Owner | contains($user))' 
     do
     printf ". " 
     sleep 5
