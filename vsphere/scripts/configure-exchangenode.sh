@@ -41,10 +41,9 @@ GUEST_PARAMETERS="-Scriptdir ${GUEST_SCRIPT_DIR}"
 vm_powershell --SCRIPT "${GUEST_SCRIPT}" \
     --PARAMETERS "${GUEST_PARAMETERS}" --INTERACTIVE 
     
-
+NETFX_VERSION=$(cat netframework/version)
 guest_mkdir 'c:\swdist'
-
-guest_copy
+guest_upload "./netframework/ndp${NETFX_VERSION}-x86-x64-allos-enu.exe" "c:\\swdist\\ndp${NETFX_VERSION}-x86-x64-allos-enu.exe"
 
 
 
