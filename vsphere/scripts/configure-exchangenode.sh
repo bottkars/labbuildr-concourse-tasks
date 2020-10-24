@@ -11,13 +11,15 @@ export SCENARIO_SCRIPT_DIR="${GUEST_SCRIPT_DIR}/E2019"
 export LABBUILDR_DOMAIN=$(echo $LABBUILDR_FQDN | cut -d'.' -f1-1)
 export LABBUILDR_LOGINUSER="${LABBUILDR_DOMAIN}\\${LABBUILDR_LOGINUSER}"
 
-echo "Inserting ${LABBUILDR_SQL_ISO}"
+echo "Inserting ${LABBUILDR_EXCHANGE_ISO}"
 govc device.cdrom.insert \
     -vm.ipath ${LABBUILDR_VM_IPATH} \
     -device cdrom-3001 "${LABBUILDR_EXCHANGE_ISO}"
 echo "connecting ${LABBUILDR_EXCHANGE_ISO}"
 govc device.connect \
         -vm.ipath="${LABBUILDR_VM_IPATH}" cdrom-3001
+
+echo $BASH_SOURCE
 
 MYSELF="$(dirname "${BASH_SOURCE[0]}")"
 source "${MYSELF}/functions/labbuildr_functions.sh"
