@@ -127,12 +127,14 @@ function create_disk {
 function guest_upload {
     local source_file=${1}
     local target_file=${2}
-    govc guest.upload vm.ipath "${LABBUILDR_VM_IPATH}" \
+    govc guest.upload -vm.ipath "${LABBUILDR_VM_IPATH}" \
+    -l="${LABBUILDR_LOGINUSER}" \
     ${source_file} ${target_file}
 }
 
 function guest_mkdir {
     local target_dir=${1}
-    govc guest.mkdir vm.ipath "${LABBUILDR_VM_IPATH}" \
+    govc guest.mkdir -vm.ipath "${LABBUILDR_VM_IPATH}" \
+    -l="${LABBUILDR_LOGINUSER}" \
     -p ${target_dir}
 }
