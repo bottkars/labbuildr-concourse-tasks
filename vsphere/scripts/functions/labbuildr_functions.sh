@@ -50,7 +50,6 @@ function checkuser {
 }
 
 
-
 function vm_powershell {
     # local oldstate="$(shopt -po xtrace noglob errexit)"
     set +u
