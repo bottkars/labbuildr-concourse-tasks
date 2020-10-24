@@ -1,7 +1,7 @@
 #!/bin/bash
 set -u # we don´t use e for vmware´s eject bug
 [[ "${LABBUILDR_DEBUG}" == "TRUE" ]] && set -x
-labbuildr 2020
+figlet labbuildr 2020
 govc about
 export LABBUILDR_VM_IPATH=${LABBUILDR_VM_FOLDER}/${LABBUILDR_VM_NAME}
 

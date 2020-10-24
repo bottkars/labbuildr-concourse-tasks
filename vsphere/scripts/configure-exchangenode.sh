@@ -1,13 +1,13 @@
 #!/bin/bash
 set -eu
 [[ "${LABBUILDR_DEBUG}" == "TRUE" ]] && set -x
-labbuildr 2020
+figlet labbuildr 2020
 govc about
 
 export LABBUILDR_VM_IPATH=${LABBUILDR_VM_FOLDER}/${LABBUILDR_VM_NAME}
 export GUEST_SCRIPT_DIR="D:/labbuildr-scripts"
 export NODE_SCRIPT_DIR="${GUEST_SCRIPT_DIR}/NODE"
-export SCENARIO_SCRIPT_DIR="${GUEST_SCRIPT_DIR}/SQL"
+export SCENARIO_SCRIPT_DIR="${GUEST_SCRIPT_DIR}/E2019"
 export LABBUILDR_DOMAIN=$(echo $LABBUILDR_FQDN | cut -d'.' -f1-1)
 export LABBUILDR_LOGINUSER="${LABBUILDR_DOMAIN}\\${LABBUILDR_LOGINUSER}"
 
