@@ -116,10 +116,10 @@ function vm_powershell {
     set -- "${POSITIONAL[@]}" # restore positional parameters
     local SHELL="C:/Windows/System32/WindowsPowerShell/V1.0/powershell.exe"
     echo "==>Running ${SCRIPT} ${PARAMETERS} -interactive=$interactive"
-    retryop '(govc $govc_command -l="${LABBUILDR_LOGINUSER}" \
-        -vm.ipath="${LABBUILDR_VM_IPATH}" \
+    retryop "(govc $govc_command -l='${LABBUILDR_LOGINUSER}'\
+        -vm.ipath='${LABBUILDR_VM_IPATH}' \
         -i=$interactive \
-        "${SHELL}" "-Command \"${SCRIPT} ${PARAMETERS}\"")' 3 10
+        '${SHELL}' '-Command "${SCRIPT} ${PARAMETERS}"' )" 3 10
     set -eu 
 }
 
