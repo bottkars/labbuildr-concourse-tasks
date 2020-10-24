@@ -1,6 +1,7 @@
 #!/bin/bash
 set -eu
 [[ "${LABBUILDR_DEBUG}" == "TRUE" ]] && set -x
+labbuildr 2020
 govc about
 
 export LABBUILDR_VM_IPATH=${LABBUILDR_VM_FOLDER}/${LABBUILDR_VM_NAME}
@@ -29,7 +30,7 @@ echo "Creating Disks"
 create_disk data1 200G
 create_disk data2 200G
 create_disk data3 200G
-
+sleep 7000
 ##
 #     		$script_invoke = $NodeClone | Invoke-VMXPowershell -Guestuser $Adminuser -Guestpassword $Adminpassword -ScriptPath $IN_Guest_UNC_ScenarioScriptDir -Script configure-exchange.ps1 -interactive -Parameter "-e14_sp $e14_sp -e14_ur $e14_ur -ex_lang $e14_lang -SourcePath $IN_Guest_UNC_Sourcepath $CommonParameter"
 

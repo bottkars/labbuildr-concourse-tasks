@@ -1,6 +1,7 @@
 #!/bin/bash
 set -eu
 [[ "${LABBUILDR_DEBUG}" == "TRUE" ]] && set -x
+figlet labbuildr 2020
 govc about
 
 echo "==>Beginning deployment of ${LABBUILDR_VM_NAME} in ${LABBUILDR_RESOURCE_POOL}"
