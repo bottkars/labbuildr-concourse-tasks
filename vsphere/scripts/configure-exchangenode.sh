@@ -38,13 +38,10 @@ echo "Preparing disks in OS"
 GUEST_SCRIPT="${SCENARIO_SCRIPT_DIR}/prepare-disks.ps1"
 GUEST_PARAMETERS="-Scriptdir ${GUEST_SCRIPT_DIR}"
 
-until vm_powershell --SCRIPT "${GUEST_SCRIPT}" \
+vm_powershell --SCRIPT "${GUEST_SCRIPT}" \
     --PARAMETERS "${GUEST_PARAMETERS}" --INTERACTIVE 
     
-do
- sleep 2
- printf .
-done    
+
 guest_mkdir 'c:\swdist'
 
 guest_copy

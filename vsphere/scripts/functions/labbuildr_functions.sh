@@ -118,11 +118,16 @@ function vm_powershell {
     local SHELL="C:/Windows/System32/WindowsPowerShell/V1.0/powershell.exe"
     echo "==>Running ${SCRIPT} ${PARAMETERS} -interactive=$interactive"
 
-    govc $govc_command -l="${LABBUILDR_LOGINUSER}" \
+    until  govc $govc_command -l="${LABBUILDR_LOGINUSER}" \
         -vm.ipath="${LABBUILDR_VM_IPATH}" \
         -i=$interactive \
         "${SHELL}" "-Command \"${SCRIPT} ${PARAMETERS}\""
-    set -eu 
+    do
+        sleep 2
+        printf .
+    done 
+printf "\n"           
+set -eu 
 }
 
 
