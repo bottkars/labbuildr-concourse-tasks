@@ -4,6 +4,7 @@ platform: linux
 
 inputs:
  - name: labbuildr-concourse-tasks
+ - name: netframework
 outputs:
  - name: exchangenode-state
 

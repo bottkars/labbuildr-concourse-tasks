@@ -19,8 +19,6 @@ echo "connecting ${LABBUILDR_EXCHANGE_ISO}"
 govc device.connect \
         -vm.ipath="${LABBUILDR_VM_IPATH}" cdrom-3001
 
-echo $BASH_SOURCE
-
 MYSELF="$(dirname "${BASH_SOURCE[0]}")"
 source "${MYSELF}/functions/labbuildr_functions.sh"
 checktools
@@ -29,10 +27,27 @@ vm_reboot_step UAC
 checkstep UAC "[Postsection UAC Reboot]"
 
 echo "Creating Disks"
-create_disk data1 200G
-create_disk data2 200G
-create_disk data3 200G
+create_disk data1 500G
+create_disk data2 500G
+create_disk data3 500G
+
+echo "Preparing disks in OS"
+
+
+GUEST_SCRIPT="${SCENARIO_SCRIPT_DIR}/prepare-disks.ps1.ps1"
+GUEST_PARAMETERS=" -Scriptdir ${GUEST_SCRIPT_DIR}"
+vm_powershell --SCRIPT "${GUEST_SCRIPT}" \
+    --PARAMETERS "${GUEST_PARAMETERS}" \
+    --INTERACTIVE 
+    
+    
+    --NOWAIT
+
+
+
 sleep 7000
+
+
 ##
 #     		$script_invoke = $NodeClone | Invoke-VMXPowershell -Guestuser $Adminuser -Guestpassword $Adminpassword -ScriptPath $IN_Guest_UNC_ScenarioScriptDir -Script configure-exchange.ps1 -interactive -Parameter "-e14_sp $e14_sp -e14_ur $e14_ur -ex_lang $e14_lang -SourcePath $IN_Guest_UNC_Sourcepath $CommonParameter"
 
