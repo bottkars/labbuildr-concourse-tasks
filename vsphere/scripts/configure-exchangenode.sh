@@ -21,6 +21,7 @@ govc device.connect \
 
 MYSELF="$(dirname "${BASH_SOURCE[0]}")"
 source "${MYSELF}/functions/labbuildr_functions.sh"
+checkuser administrator
 checktools
 vm_windows_postsection
 vm_reboot_step UAC
