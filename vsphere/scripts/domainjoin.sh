@@ -25,13 +25,11 @@ GUEST_PARAMETERS="-nodename ${LABBUILDR_VM_NAME} \
 -Timezone '${LABBUILDR_TIMEZONE}' \
 -scriptdir '${GUEST_SCRIPT_DIR}' \
 -AddOnfeatures '$ADDON_FEATURES'"
-echo $GUEST_PARAMETERS
 
 
 vm_powershell --SCRIPT "${GUEST_SCRIPT}" \
     --PARAMETERS "${GUEST_PARAMETERS}" \
     --INTERACTIVE --NOWAIT
-
     
 echo "Proceeding with Checkstep"
 checkstep 3 "[Domain Join]"
