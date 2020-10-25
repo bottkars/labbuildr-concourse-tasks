@@ -20,15 +20,19 @@ PREREQ_DIR="${SOURCE_DIR}\\prereqs"
 guest_mkdir "${PREREQ_DIR}" 
 
 NETFX_VERSION=$(cat netframework/version)
+echo "Uploading NetFX ${NETFX_VERSION}"
 guest_upload "./netframework/ndp${NETFX_VERSION}-x86-x64-allos-enu.exe" "${PREREQ_DIR}\\ndp${NETFX_VERSION}-x86-x64-allos-enu.exe"
 
 UCMA_VERSION=$(cat ucmaruntime/version)
+echo "Uploading UCMA Runtime ${UCMA_VERSION}"
 guest_upload "./ucmaruntime/UcmaRuntimeSetup-${UCMA_VERSION}.exe" "${PREREQ_DIR}\\UcmaRuntimeSetup.exe"
 
 VCREDIST11_VERSION=$(cat vcredist11/version)
+echo "Uploading VCRedist 11 ${VCREDIST11_VERSION}"
 guest_upload "./vcredist/vcredist-${VCREDIST11_VERSION}.exe" "${PREREQ_DIR}\\vcredist11.exe"
 
 VCREDIST12_VERSION=$(cat vcredist12/version)
+echo "Uploading VCRedist 12 ${VCREDIST12_VERSION}"
 guest_upload "./vcredist/vcredist-${VCREDIST12_VERSION}.exe" "${PREREQ_DIR}\\vcredist12.exe"
 
 
