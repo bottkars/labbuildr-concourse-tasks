@@ -16,7 +16,7 @@ vm_ready
 checktools
 
 SOURCE_DIR="c:\\swdist"
-PREREQ_DIR="${SOURCE_DIR}\\prereqs"
+PREREQ_DIR="${SOURCE_DIR}\\prereq"
 guest_mkdir "${PREREQ_DIR}" 
 
 NETFX_VERSION=$(cat netframework/version)
@@ -40,7 +40,7 @@ guest_upload "./vcredist12/vcredist_x64-${VCREDIST12_VERSION}.exe" "${PREREQ_DIR
 
 echo "Setting Up Exchange prereqs"
 GUEST_SCRIPT="${SCENARIO_SCRIPT_DIR}/install-exchangeprereqs.ps1"
-GUEST_PARAMETERS="-Scriptdir ${GUEST_SCRIPT_DIR} -prereq prereqs -SourcePath $SOURCE_DIR"
+GUEST_PARAMETERS="-Scriptdir ${GUEST_SCRIPT_DIR} -prereq prereq -SourcePath $SOURCE_DIR"
 vm_powershell --SCRIPT "${GUEST_SCRIPT}"   \
     --PARAMETERS "${GUEST_PARAMETERS}" --INTERACTIVE 
 
