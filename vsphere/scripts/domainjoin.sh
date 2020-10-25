@@ -3,10 +3,6 @@ set -eu
 [[ "${LABBUILDR_DEBUG}" == "TRUE" ]] && set -x
 figlet labbuildr 2020
 govc about
-export LABBUILDR_VM_IPATH=${LABBUILDR_VM_FOLDER}/${LABBUILDR_VM_NAME}
-export GUEST_SCRIPT_DIR="D:/labbuildr-scripts"
-export NODE_SCRIPT_DIR="${GUEST_SCRIPT_DIR}/node"
-
 
 MYSELF="$(dirname "${BASH_SOURCE[0]}")"
 source "${MYSELF}/functions/labbuildr_functions.sh"

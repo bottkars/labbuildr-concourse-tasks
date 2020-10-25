@@ -4,49 +4,43 @@ set -eu
 figlet labbuildr 2020
 govc about
 
+
 export LABBUILDR_DOMAIN=$(echo $LABBUILDR_FQDN | cut -d'.' -f1-1)
 export LABBUILDR_LOGINUSER="${LABBUILDR_DOMAIN}\\${LABBUILDR_LOGINUSER}"
 
 
-
-
-echo "Inserting ${LABBUILDR_EXCHANGE_ISO}"
-govc device.cdrom.insert \
-    -vm.ipath ${LABBUILDR_VM_IPATH} \
-    -device cdrom-3001 "${LABBUILDR_EXCHANGE_ISO}"
-echo "connecting ${LABBUILDR_EXCHANGE_ISO}"
-govc device.connect \
-        -vm.ipath="${LABBUILDR_VM_IPATH}" cdrom-3001
-
 MYSELF="$(dirname "${BASH_SOURCE[0]}")"
 source "${MYSELF}/functions/labbuildr_functions.sh"
-vm_ready
-checktools
-vm_windows_postsection
-vm_reboot_step UAC
-checkstep UAC "[Postsection UAC Reboot]"
-
-echo "Creating Disks"
-create_disk data1 500G
-create_disk data2 500G
-create_disk data3 500G
 
 vm_ready
 checktools
-echo "Preparing disks in OS"
-GUEST_SCRIPT="${SCENARIO_SCRIPT_DIR}/prepare-disks.ps1"
-GUEST_PARAMETERS="-Scriptdir ${GUEST_SCRIPT_DIR}"
 
-vm_powershell --SCRIPT "${GUEST_SCRIPT}" \
-    --PARAMETERS "${GUEST_PARAMETERS}" --INTERACTIVE 
-    
+SOURCE_DIR="c:\\swdist"
+PREREQ_DIR="${SOURCE_DIR}\\prereqs"
+guest_mkdir "${PREREQ_DIR}" 
+
 NETFX_VERSION=$(cat netframework/version)
-guest_mkdir 'c:\swdist'
-guest_upload "./netframework/ndp${NETFX_VERSION}-x86-x64-allos-enu.exe" "c:\\swdist\\ndp${NETFX_VERSION}-x86-x64-allos-enu.exe"
+guest_upload "./netframework/ndp${NETFX_VERSION}-x86-x64-allos-enu.exe" "${PREREQ_DIR}\\ndp${NETFX_VERSION}-x86-x64-allos-enu.exe"
+
+UCMA_VERSION=$(cat ucmaruntime/version)
+guest_upload "./ucmaruntime/UcmaRuntimeSetup-${UCMA_VERSION}.exe" "${PREREQ_DIR}\\UcmaRuntimeSetup.exe"
+
+VCREDIST11_VERSION=$(cat vcredist11/version)
+guest_upload "./vcredist/vcredist-${VCREDIST11_VERSION}.exe" "${PREREQ_DIR}\\vcredist11.exe"
+
+VCREDIST12_VERSION=$(cat vcredist12/version)
+guest_upload "./vcredist/vcredist-${VCREDIST12_VERSION}.exe" "${PREREQ_DIR}\\vcredist12.exe"
 
 
 
-sleep 7000
+
+echo "Setting Up Exchange prereqs"
+GUEST_SCRIPT="${SCENARIO_SCRIPT_DIR}/install-exchangeprereqs.ps1"
+GUEST_PARAMETERS="-Scriptdir ${GUEST_SCRIPT_DIR} "
+vm_powershell --SCRIPT "${GUEST_SCRIPT}" -prereq prereqs -SourcePath $SOURCE_DIR \
+    --PARAMETERS "${GUEST_PARAMETERS}" --INTERACTIVE 
+
+
 
 
 ##
