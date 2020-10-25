@@ -157,7 +157,7 @@ function guest_upload {
     local source_file=${1}
     local target_file=${2}
 #    oldstate="$(shopt -po xtrace noglob errexit)"    
-    set +e
+    set +ex
     govc guest.upload -json -vm.ipath "${LABBUILDR_VM_IPATH}" \
     -l="${LABBUILDR_LOGINUSER}" \
     ${source_file} ${target_file} 
