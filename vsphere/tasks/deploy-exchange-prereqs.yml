@@ -34,5 +34,3 @@ params:
 
 run:
   path: labbuildr-concourse-tasks/vsphere/scripts/deploy-exchange-prereqs.sh
-  .sh
-
