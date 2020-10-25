@@ -29,5 +29,4 @@ params:
     LABBUILDR_EXCHANGE_CU:   
 
 run:
-  path: labbuildr-concourse-tasks/vsphere/scripts/create-dag
-  .sh
+  path: labbuildr-concourse-tasks/vsphere/scripts/create-dag.sh
