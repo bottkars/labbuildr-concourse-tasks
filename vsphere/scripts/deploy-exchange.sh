@@ -24,3 +24,4 @@ GUEST_PARAMETERS="-ex_cu $LABBUILDR_EXCHANGE_CU -install_from ISO -Scriptdir ${G
 vm_powershell --SCRIPT "${GUEST_SCRIPT}"   \
     --PARAMETERS "${GUEST_PARAMETERS}" --INTERACTIVE --NOWAIT
 
+checkstep exchange "[Postsection Exchange Reboot]"

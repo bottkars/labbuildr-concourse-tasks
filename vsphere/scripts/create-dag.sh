@@ -16,8 +16,6 @@ vm_ready
 checktools
 SOURCE_DIR="c:\\swdist"
 
- -ScriptPath $IN_Guest_UNC_ScenarioScriptDir -activeWindow -interactive -Script create-dag.ps1 -Parameter "-DAGIP $DAGIP -AddressFamily $EXAddressFamiliy -EX_Version $EX_Version -SourcePath $IN_Guest_UNC_Sourcepath $CommonParameter"
-				} # end if $DAG
 
 echo "Setting Up Exchange 2019 DAG "
 GUEST_SCRIPT="${SCENARIO_SCRIPT_DIR}/create-dag.ps1.ps1"
