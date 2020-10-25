@@ -44,3 +44,5 @@ GUEST_PARAMETERS="-Scriptdir ${GUEST_SCRIPT_DIR} -Prereq ${PREREQ} -SourcePath $
 vm_powershell --SCRIPT "${GUEST_SCRIPT}"   \
     --PARAMETERS "${GUEST_PARAMETERS}" --INTERACTIVE 
 
+vm_reboot_step exchangeprereqs
+checkstep exchangeprereqs "[Postsection exchangeprereqs Reboot]"
