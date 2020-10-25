@@ -29,11 +29,11 @@ guest_upload "./ucmaruntime/UcmaRuntimeSetup-${UCMA_VERSION}.exe" "${PREREQ_DIR}
 
 VCREDIST11_VERSION=$(cat vcredist11/version)
 echo "Uploading VCRedist 11 ${VCREDIST11_VERSION}"
-guest_upload "./vcredist/vcredist-${VCREDIST11_VERSION}.exe" "${PREREQ_DIR}\\vcredist11.exe"
+guest_upload "./vcredist/vcredist_x64-${VCREDIST11_VERSION}.exe" "${PREREQ_DIR}\\vcredist11.exe"
 
 VCREDIST12_VERSION=$(cat vcredist12/version)
 echo "Uploading VCRedist 12 ${VCREDIST12_VERSION}"
-guest_upload "./vcredist/vcredist-${VCREDIST12_VERSION}.exe" "${PREREQ_DIR}\\vcredist12.exe"
+guest_upload "./vcredist/vcredist_x64-${VCREDIST12_VERSION}.exe" "${PREREQ_DIR}\\vcredist12.exe"
 
 
 
