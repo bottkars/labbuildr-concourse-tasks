@@ -121,7 +121,7 @@ function vm_powershell {
     until  govc $govc_command -l="${LABBUILDR_LOGINUSER}" \
         -vm.ipath="${LABBUILDR_VM_IPATH}" \
         -i=$interactive \
-        "${SHELL}" "-Command \"${SCRIPT} ${PARAMETERS}\""
+        "${SHELL}" "-Command \"${SCRIPT} ${PARAMETERS}\"" 2>&1
     do
         sleep 2
         printf .
