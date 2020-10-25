@@ -1,0 +1,33 @@
+---
+# this simple tasksm get´s running vm´s of an azurestack subscription
+platform: linux
+
+inputs:
+ - name: labbuildr-concourse-tasks
+outputs:
+ - name: exchangenode-state
+
+
+params:
+    GOVC_INSECURE: 
+    GOVC_PASSWORD: 
+    GOVC_URL: 
+    GOVC_USERNAME: 
+    GOVC_RESOURCE_POOL: 
+    GOVC_DATASTORE: 
+    GOVC_DATACENTER: 
+    GOVC_NETWORK: 
+    LABBUILDR_SUBNET: 
+    LABBUILDR_GATEWAY: 
+    LABBUILDR_NETMASK: 
+    LABBUILDR_FQDN: 
+    LABBUILDR_DNS: 
+    LABBUILDR_VM_FOLDER: 
+    LABBUILDR_VM_NAME:    
+    LABBUILDR_DEBUG:
+    LABBUILDR_EXCHANGE_ISO:
+    LABBUILDR_EXCHANGE_CU:   
+
+run:
+  path: labbuildr-concourse-tasks/vsphere/scripts/create-dag
+  .sh
