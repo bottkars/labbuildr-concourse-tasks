@@ -158,7 +158,7 @@ function guest_upload {
     local target_file=${2}
     govc guest.upload -vm.ipath "${LABBUILDR_VM_IPATH}" \
     -l="${LABBUILDR_LOGINUSER}" \
-    ${source_file} ${target_file}
+    ${source_file} ${target_file} --json
 }
 
 function guest_mkdir {
