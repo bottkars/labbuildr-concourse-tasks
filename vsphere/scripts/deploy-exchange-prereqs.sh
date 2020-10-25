@@ -29,19 +29,19 @@ guest_upload "./ucmaruntime/UcmaRuntimeSetup-${UCMA_VERSION}.exe" "${PREREQ_DIR}
 
 VCREDIST11_VERSION=$(cat vcredist11/version)
 echo "Uploading VCRedist 11 ${VCREDIST11_VERSION}"
-guest_upload "./vcredist/vcredist_x64-${VCREDIST11_VERSION}.exe" "${PREREQ_DIR}\\vcredist11.exe"
+guest_upload "./vcredist11/vcredist_x64-${VCREDIST11_VERSION}.exe" "${PREREQ_DIR}\\vcredist11.exe"
 
 VCREDIST12_VERSION=$(cat vcredist12/version)
 echo "Uploading VCRedist 12 ${VCREDIST12_VERSION}"
-guest_upload "./vcredist/vcredist_x64-${VCREDIST12_VERSION}.exe" "${PREREQ_DIR}\\vcredist12.exe"
+guest_upload "./vcredist12/vcredist_x64-${VCREDIST12_VERSION}.exe" "${PREREQ_DIR}\\vcredist12.exe"
 
 
 
 
 echo "Setting Up Exchange prereqs"
 GUEST_SCRIPT="${SCENARIO_SCRIPT_DIR}/install-exchangeprereqs.ps1"
-GUEST_PARAMETERS="-Scriptdir ${GUEST_SCRIPT_DIR} "
-vm_powershell --SCRIPT "${GUEST_SCRIPT}" -prereq prereqs -SourcePath $SOURCE_DIR \
+GUEST_PARAMETERS="-Scriptdir ${GUEST_SCRIPT_DIR} -prereq prereqs -SourcePath $SOURCE_DIR"
+vm_powershell --SCRIPT "${GUEST_SCRIPT}"   \
     --PARAMETERS "${GUEST_PARAMETERS}" --INTERACTIVE 
 
 
