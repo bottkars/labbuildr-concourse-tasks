@@ -5,6 +5,9 @@ platform: linux
 inputs:
  - name: labbuildr-concourse-tasks
  - name: netframework
+ - name: vcredist11
+ - name: vcredist12
+ - name: ucmaruntime
 outputs:
  - name: exchangenode-state
 
