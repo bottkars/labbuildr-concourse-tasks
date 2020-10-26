@@ -18,7 +18,7 @@ SOURCE_DIR="c:\\swdist"
 
 
 echo "Setting Up Exchange 2019 DAG "
-GUEST_SCRIPT="${SCENARIO_SCRIPT_DIR}/create-dag.ps1.ps1"
+GUEST_SCRIPT="${SCENARIO_SCRIPT_DIR}/create-dag.ps1"
 GUEST_PARAMETERS="-ex_version E2019 -Scriptdir ${GUEST_SCRIPT_DIR} -SourcePath $SOURCE_DIR"
 vm_powershell --SCRIPT "${GUEST_SCRIPT}"   \
     --PARAMETERS "${GUEST_PARAMETERS}" --INTERACTIVE
