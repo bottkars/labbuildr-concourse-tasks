@@ -22,3 +22,11 @@ GUEST_PARAMETERS="-Scriptdir ${GUEST_SCRIPT_DIR} -SourcePath $SOURCE_DIR"
 vm_powershell --SCRIPT "${GUEST_SCRIPT}"   \
     --PARAMETERS "${GUEST_PARAMETERS}" --INTERACTIVE
 
+
+echo "Setting Security for Exchange 2019"
+GUEST_SCRIPT="${SCENARIO_SCRIPT_DIR}/create-security.ps1"
+GUEST_PARAMETERS="-Scriptdir ${GUEST_SCRIPT_DIR} -SourcePath $SOURCE_DIR"
+vm_powershell --SCRIPT "${GUEST_SCRIPT}"   \
+    --PARAMETERS "${GUEST_PARAMETERS}" --INTERACTIVE
+
+
