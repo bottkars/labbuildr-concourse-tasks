@@ -19,7 +19,8 @@ SOURCE_DIR="c:\\swdist"
 
 echo "Setting Up Exchange 2019 DAG "
 GUEST_SCRIPT="."
-GUEST_PARAMETERS=" 'C:\Program Files\Microsoft\Exchange Server\V15\bin\RemoteExchange.ps1'; Connect-ExchangeServer -auto; . '$GUEST_SCRIPT' -ex_version E2019 -Scriptdir ${GUEST_SCRIPT_DIR} -SourcePath $SOURCE_DIR"
+USER_SCRIPT="$GUEST_SCRIPT_DIR/userps1"
+GUEST_PARAMETERS=" 'C:\Program Files\Microsoft\Exchange Server\V15\bin\RemoteExchange.ps1'; Connect-ExchangeServer -auto; . '${SCENARIO_SCRIPT_DIR}/user.ps1' -ex_version E2019 -Scriptdir ${GUEST_SCRIPT_DIR} -SourcePath $SOURCE_DIR"
 vm_powershell --SCRIPT "${GUEST_SCRIPT}"   \
     --PARAMETERS "${GUEST_PARAMETERS}" --INTERACTIVE
 
