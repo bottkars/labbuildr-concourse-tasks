@@ -12,8 +12,9 @@ govc datastore.upload -ds $LABBUILDR_DATASTORE ./labbuildr-scripts.iso ${LABBUIL
 echo "==>Attaching Script ISO"
 govc device.cdrom.insert \
     -vm.ipath ${LABBUILDR_VM_IPATH} \
-    -device cdrom-3000 ${LABBUILDR_VM_NAME}/labbuildr-scripts.iso \
-    -ds $LABBUILDR_DATASTORE
+    -device cdrom-3000 \
+    -ds $LABBUILDR_DATASTORE \
+     ${LABBUILDR_VM_NAME}/labbuildr-scripts.iso
 govc device.connect \
         -vm.ipath=${LABBUILDR_VM_IPATH} ${LABBUILDR_DEVICE}
 
