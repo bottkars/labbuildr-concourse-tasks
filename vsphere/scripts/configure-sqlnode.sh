@@ -14,7 +14,9 @@ export LABBUILDR_LOGINUSER="${LABBUILDR_DOMAIN}\\${LABBUILDR_LOGINUSER}"
 echo "Inserting ${LABBUILDR_SQL_ISO}"
 govc device.cdrom.insert \
     -vm.ipath ${LABBUILDR_VM_IPATH} \
-    -device cdrom-3001 "${LABBUILDR_SQL_ISO}"
+    -device cdrom-3001 \
+    -ds $LABBUILDR_DATASTORE \
+    "${LABBUILDR_SQL_ISO}"
 echo "connecting ${LABBUILDR_SQL_ISO}"
 govc device.connect \
         -vm.ipath="${LABBUILDR_VM_IPATH}" cdrom-3001
