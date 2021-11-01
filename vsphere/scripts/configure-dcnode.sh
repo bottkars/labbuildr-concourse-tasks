@@ -43,7 +43,7 @@ checkstep 2 "[Network Setup]"
 LABBUILDR_DOMAIN=$(echo $LABBUILDR_FQDN | cut -d'.' -f1-1)
 echo "==>Proceeding with Domain Initialization of ${LABBUILDR_DOMAIN}"
 LABBUILDR_DOMAIN_SUFFIX=$(echo $LABBUILDR_FQDN | cut -d'.' -f2-)
-GUEST_SCRIPT="finish-domain.ps1"
+GUEST_SCRIPT="${NODE_SCRIPT_DIR}/finish-domain.ps1"
 GUEST_PARAMETERS="-domain ${LABBUILDR_DOMAIN} -domainsuffix ${LABBUILDR_DOMAIN_SUFFIX}"
 vm_powershell --SCRIPT "${GUEST_SCRIPT}" \
     --PARAMETERS "${GUEST_PARAMETERS}" \
