@@ -5,6 +5,8 @@ figlet labbuildr 2020
 govc about
 
 MYSELF="$(dirname "${BASH_SOURCE[0]}")"
+export LABBUILDR_VM_IPATH=${LABBUILDR_VM_FOLDER}/${LABBUILDR_VM_NAME}
+
 source "${MYSELF}/functions/labbuildr_functions.sh"
 
 vm_ready
