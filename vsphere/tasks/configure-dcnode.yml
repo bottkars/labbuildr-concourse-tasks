@@ -4,7 +4,6 @@ platform: linux
 
 inputs:
  - name: labbuildr-concourse-tasks
- - name: labuildr-scripts
 outputs:
  - name: dcnode-state
 

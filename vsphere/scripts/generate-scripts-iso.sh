@@ -5,6 +5,8 @@ set -eu
 figlet labbuildr 2020
 govc about
 
+export LABBUILDR_VM_IPATH=${LABBUILDR_VM_FOLDER}/${LABBUILDR_VM_NAME}
+
 echo "==>Creating Script ISO"
 genisoimage -quiet -o labbuildr-scripts.iso -R -J -D labbuildr-scripts 
 echo "==>Uploading Script ISO to vCenter"
