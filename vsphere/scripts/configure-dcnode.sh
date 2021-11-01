@@ -73,7 +73,7 @@ vm_powershell --SCRIPT "${GUEST_SCRIPT}" \
     --PARAMETERS "${GUEST_PARAMETERS}"
 
 GUEST_SCRIPTS=("${NODE_SCRIPT_DIR}/enable-ansiblewinrm.ps1" "${NODE_SCRIPT_DIR}/set-winrm.ps1")
-GUEST_PARAMETERS="-ScriptDir ${NODE_SCRIPT_DIR}"
+GUEST_PARAMETERS="-ScriptDir ${GUEST_SCRIPT_DIR}"
 for GUEST_SCRIPT in "${GUEST_SCRIPTS[@]}"
 do
 vm_powershell --SCRIPT "${GUEST_SCRIPT}" \
